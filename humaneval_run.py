@@ -666,6 +666,15 @@ class Evaluate:
                     # Execute test cases
                     test_cases = tests[0].split('\n') if tests else []
                     passed_tests = 0
+
+                    actual_func_name = self.extract_function_name(first_code)
+                    test_case = test_cases[0]
+                    expected_func_name = test_case.split('(')[0].replace('assert ', '')
+                    
+                    if actual_func_name and actual_func_name != expected_func_name:
+                        test_cases = self.normalize_test_cases(test_cases, actual_func_name, expected_func_name)
+                        logger.info(f"Function name mismatch. Expected: {expected_func_name}, Got: {actual_func_name}")
+            
                     
                     for j, test in enumerate(test_cases, 1):
                         if test.strip():
