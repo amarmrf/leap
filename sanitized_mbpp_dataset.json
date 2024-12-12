@@ -1,0 +1,333 @@
+[
+  {
+    "row_idx": 100,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 788,
+      "prompt": "Write a function to create a new tuple from the given string and list.",
+      "code": "def new_tuple(test_list, test_str):\n  return tuple(test_list + [test_str])",
+      "test_imports": [],
+      "test_list": [
+        "assert new_tuple([\"WEB\", \"is\"], \"best\") == ('WEB', 'is', 'best')",
+        "assert new_tuple([\"We\", \"are\"], \"Developers\") == ('We', 'are', 'Developers')",
+        "assert new_tuple([\"Part\", \"is\"], \"Wrong\") == ('Part', 'is', 'Wrong')"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 101,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 790,
+      "prompt": "Write a python function to check whether every even index contains even numbers of a given list.",
+      "code": "def even_position(nums):\n\treturn all(nums[i]%2==i%2 for i in range(len(nums)))",
+      "test_imports": [],
+      "test_list": [
+        "assert even_position([3,2,1]) == False",
+        "assert even_position([1,2,3]) == False",
+        "assert even_position([2,1,4]) == True"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 102,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 791,
+      "prompt": "Write a function to remove tuples from the given tuple.",
+      "code": "def remove_nested(test_tup):\n  res = tuple()\n  for count, ele in enumerate(test_tup):\n    if not isinstance(ele, tuple):\n      res = res + (ele, )\n  return (res) ",
+      "test_imports": [],
+      "test_list": [
+        "assert remove_nested((1, 5, 7, (4, 6), 10)) == (1, 5, 7, 10)",
+        "assert remove_nested((2, 6, 8, (5, 7), 11)) == (2, 6, 8, 11)",
+        "assert remove_nested((3, 7, 9, (6, 8), 12)) == (3, 7, 9, 12)",
+        "assert remove_nested((3, 7, 9, (6, 8), (5,12), 12)) == (3, 7, 9, 12)"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 103,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 792,
+      "prompt": "Write a python function to count the number of lists in a given number of lists.",
+      "code": "def count_list(input_list): \n    return len(input_list)",
+      "test_imports": [],
+      "test_list": [
+        "assert count_list([[1, 3], [5, 7], [9, 11], [13, 15, 17]]) == 4",
+        "assert count_list([[1,2],[2,3],[4,5]]) == 3",
+        "assert count_list([[1,0],[2,0]]) == 2"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 104,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 793,
+      "prompt": "Write a python function to find the last position of an element in a sorted array.",
+      "code": "def last(arr,x):\n    n = len(arr)\n    low = 0\n    high = n - 1\n    res = -1  \n    while (low <= high):\n        mid = (low + high) // 2 \n        if arr[mid] > x:\n            high = mid - 1\n        elif arr[mid] < x:\n            low = mid + 1\n        else:\n            res = mid\n            low = mid + 1\n    return res",
+      "test_imports": [],
+      "test_list": [
+        "assert last([1,2,3],1) == 0",
+        "assert last([1,1,1,2,3,4],1) == 2",
+        "assert last([2,3,2,3,6,8,9],3) == 3"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 105,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 794,
+      "prompt": "Write a function that matches a string that has an 'a' followed by anything, ending in 'b'.",
+      "code": "import re\ndef text_starta_endb(text):\n        patterns = 'a.*?b$'\n        return re.search(patterns,  text)",
+      "test_imports": [],
+      "test_list": [
+        "assert text_starta_endb(\"aabbbb\")",
+        "assert not text_starta_endb(\"aabAbbbc\")",
+        "assert not text_starta_endb(\"accddbbjjj\")"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 106,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 796,
+      "prompt": "Write function to find the sum of all items in the given dictionary.",
+      "code": "def return_sum(dict):\n  sum = 0\n  for i in dict.values():\n    sum = sum + i\n  return sum",
+      "test_imports": [],
+      "test_list": [
+        "assert return_sum({'a': 100, 'b':200, 'c':300}) == 600",
+        "assert return_sum({'a': 25, 'b':18, 'c':45}) == 88",
+        "assert return_sum({'a': 36, 'b':39, 'c':49}) == 124"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 107,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 797,
+      "prompt": "Write a python function to find the sum of all odd natural numbers within the range l and r.",
+      "code": "def sum_odd(n): \n    terms = (n + 1)//2\n    sum1 = terms * terms \n    return sum1  \ndef sum_in_range(l,r): \n    return sum_odd(r) - sum_odd(l - 1)",
+      "test_imports": [],
+      "test_list": [
+        "assert sum_in_range(2,5) == 8",
+        "assert sum_in_range(5,7) == 12",
+        "assert sum_in_range(7,13) == 40"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 108,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 798,
+      "prompt": "Write a python function to find the sum of an array.",
+      "code": "def _sum(arr):  \n    sum=0\n    for i in arr: \n        sum = sum + i      \n    return(sum)  ",
+      "test_imports": [],
+      "test_list": [
+        "assert _sum([1, 2, 3]) == 6",
+        "assert _sum([15, 12, 13, 10]) == 50",
+        "assert _sum([0, 1, 2]) == 3"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 109,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 799,
+      "prompt": "Write a function to that rotate left bits by d bits a given number. We assume that the number is 32 bit.",
+      "code": "def left_rotate(n,d):   \n    INT_BITS = 32\n    return (n << d)|(n >> (INT_BITS - d))  ",
+      "test_imports": [],
+      "test_list": [
+        "assert left_rotate(16,2) == 64",
+        "assert left_rotate(10,2) == 40",
+        "assert left_rotate(99,3) == 792",
+        "assert left_rotate(99,3) == 792",
+        "assert left_rotate(0b0001,3) == 0b1000",
+        "assert left_rotate(0b0101,3) == 0b101000",
+        "assert left_rotate(0b11101,3) == 0b11101000"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 110,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 800,
+      "prompt": "Write a function to remove all whitespaces from a string.",
+      "code": "import re\ndef remove_all_spaces(text):\n return (re.sub(r'\\s+', '',text))",
+      "test_imports": [],
+      "test_list": [
+        "assert remove_all_spaces('python  program')==('pythonprogram')",
+        "assert remove_all_spaces('python   programming    language')==('pythonprogramminglanguage')",
+        "assert remove_all_spaces('python                     program')==('pythonprogram')",
+        "assert remove_all_spaces('   python                     program')=='pythonprogram'"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 111,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 801,
+      "prompt": "Write a python function to count the number of equal numbers from three given integers.",
+      "code": "def test_three_equal(x,y,z):\n  result = set([x,y,z])\n  if len(result)==3:\n    return 0\n  else:\n    return 4-len(result)",
+      "test_imports": [],
+      "test_list": [
+        "assert test_three_equal(1,1,1) == 3",
+        "assert test_three_equal(-1,-2,-3) == 0",
+        "assert test_three_equal(1,2,2) == 2"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 112,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 802,
+      "prompt": "Write a python function to count the number of rotations required to generate a sorted array. https://www.geeksforgeeks.org/count-of-rotations-required-to-generate-a-sorted-array/",
+      "code": "def count_rotation(arr):   \n    for i in range (1,len(arr)): \n        if (arr[i] < arr[i - 1]): \n            return i  \n    return 0",
+      "test_imports": [],
+      "test_list": [
+        "assert count_rotation([3,2,1]) == 1",
+        "assert count_rotation([4,5,1,2,3]) == 2",
+        "assert count_rotation([7,8,9,1,2,3]) == 3",
+        "assert count_rotation([1,2,3]) == 0",
+        "assert count_rotation([1,3,2]) == 2"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 113,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 803,
+      "prompt": "Write a function to check whether the given number is a perfect square or not. https://www.geeksforgeeks.org/check-if-given-number-is-perfect-square-in-cpp/",
+      "code": "def is_perfect_square(n) :\n    i = 1\n    while (i * i<= n):\n        if ((n % i == 0) and (n / i == i)):\n            return True     \n        i = i + 1\n    return False",
+      "test_imports": [],
+      "test_list": [
+        "assert not is_perfect_square(10)",
+        "assert is_perfect_square(36)",
+        "assert not is_perfect_square(14)",
+        "assert is_perfect_square(14*14)",
+        "assert not is_perfect_square(125)",
+        "assert is_perfect_square(125*125)"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 114,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 804,
+      "prompt": "Write a function to check whether the product of numbers in a list is even or not.",
+      "code": "def is_product_even(arr): \n    for i in range(len(arr)): \n        if (arr[i] & 1) == 0: \n            return True\n    return False",
+      "test_imports": [],
+      "test_list": [
+        "assert is_product_even([1,2,3])",
+        "assert is_product_even([1,2,1,4])",
+        "assert not is_product_even([1,1])"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 115,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 805,
+      "prompt": "Write a function that returns the list in a list of lists whose sum of elements is the highest.",
+      "code": "def max_sum_list(lists):\n return max(lists, key=sum)",
+      "test_imports": [],
+      "test_list": [
+        "assert max_sum_list([[1,2,3], [4,5,6], [10,11,12], [7,8,9]])==[10, 11, 12]",
+        "assert max_sum_list([[3,2,1], [6,5,4], [12,11,10]])==[12,11,10]",
+        "assert max_sum_list([[2,3,1]])==[2,3,1]"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 116,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 806,
+      "prompt": "Write a function to find maximum run of uppercase characters in the given string.",
+      "code": "def max_run_uppercase(test_str):\n  cnt = 0\n  res = 0\n  for idx in range(0, len(test_str)):\n    if test_str[idx].isupper():\n      cnt += 1\n    else:\n      res = cnt\n      cnt = 0\n  if test_str[len(test_str) - 1].isupper():\n    res = cnt\n  return (res)",
+      "test_imports": [],
+      "test_list": [
+        "assert max_run_uppercase('GeMKSForGERksISBESt') == 5",
+        "assert max_run_uppercase('PrECIOusMOVemENTSYT') == 6",
+        "assert max_run_uppercase('GooGLEFluTTER') == 4"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 117,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 807,
+      "prompt": "Write a python function to find the first odd number in a given list of numbers.",
+      "code": "def first_odd(nums):\n  first_odd = next((el for el in nums if el%2!=0),-1)\n  return first_odd",
+      "test_imports": [],
+      "test_list": [
+        "assert first_odd([1,3,5]) == 1",
+        "assert first_odd([2,4,1,3]) == 1",
+        "assert first_odd ([8,9,1]) == 9"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 118,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 808,
+      "prompt": "Write a function to check if the given tuples contain the k or not.",
+      "code": "def check_K(test_tup, K):\n  res = False\n  for ele in test_tup:\n    if ele == K:\n      res = True\n      break\n  return res ",
+      "test_imports": [],
+      "test_list": [
+        "assert check_K((10, 4, 5, 6, 8), 6) == True",
+        "assert check_K((1, 2, 3, 4, 5, 6), 7) == False",
+        "assert check_K((7, 8, 9, 44, 11, 12), 11) == True"
+      ]
+    },
+    "truncated_cells": []
+  },
+  {
+    "row_idx": 119,
+    "row": {
+      "source_file": "Benchmark Questions Verification V2.ipynb",
+      "task_id": 809,
+      "prompt": "Write a function to check if each element of second tuple is smaller than its corresponding element in the first tuple.",
+      "code": "def check_smaller(test_tup1, test_tup2):\n  return all(x > y for x, y in zip(test_tup1, test_tup2))",
+      "test_imports": [],
+      "test_list": [
+        "assert check_smaller((1, 2, 3), (2, 3, 4)) == False",
+        "assert check_smaller((4, 5, 6), (3, 4, 5)) == True",
+        "assert check_smaller((11, 12, 13), (10, 11, 12)) == True"
+      ]
+    },
+    "truncated_cells": []
+  }
+]

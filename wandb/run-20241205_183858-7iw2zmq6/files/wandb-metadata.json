@@ -1,0 +1,47 @@
+{
+    "os": "macOS-15.1-arm64-arm-64bit",
+    "python": "3.12.1",
+    "heartbeatAt": "2024-12-06T02:38:59.619727",
+    "startedAt": "2024-12-06T02:38:58.685445",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--task",
+        "CODE",
+        "--model_variant",
+        "Qwen/Qwen2.5-Coder-0.5B-Instruct",
+        "--data_path",
+        "./data",
+        "--output_dir",
+        "./outputs",
+        "--mixed_precision"
+    ],
+    "state": "running",
+    "program": "/Users/amarmaruf/dev/dsse-group-project/score_mps_run.py",
+    "codePathLocal": "score_mps_run.py",
+    "codePath": "score_mps_run.py",
+    "git": {
+        "remote": "git@github.com:sasirekha3/dsse-group-project.git",
+        "commit": "ec61de125d245a8b14d44038bd1d1bd4f90fb621"
+    },
+    "email": null,
+    "root": "/Users/amarmaruf/dev/dsse-group-project",
+    "host": "Amars-MacBook-Pro.local",
+    "username": "amarmaruf",
+    "executable": "/Users/amarmaruf/miniconda3/envs/py312/bin/python",
+    "cpu_count": 10,
+    "cpu_count_logical": 10,
+    "disk": {
+        "/": {
+            "total": 926.3517189025879,
+            "used": 432.5555725097656
+        }
+    },
+    "gpuapple": {
+        "type": "Apple M1 Max",
+        "vendor": "sppci_vendor_Apple"
+    },
+    "memory": {
+        "total": 64.0
+    }
+}

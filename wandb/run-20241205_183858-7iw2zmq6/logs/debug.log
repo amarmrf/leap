@@ -1,0 +1,36 @@
+2024-12-05 18:38:58,689 INFO    MainThread:80987 [wandb_setup.py:_flush():77] Current SDK version is 0.17.8
+2024-12-05 18:38:58,689 INFO    MainThread:80987 [wandb_setup.py:_flush():77] Configure stats pid to 80987
+2024-12-05 18:38:58,689 INFO    MainThread:80987 [wandb_setup.py:_flush():77] Loading settings from /Users/amarmaruf/.config/wandb/settings
+2024-12-05 18:38:58,689 INFO    MainThread:80987 [wandb_setup.py:_flush():77] Loading settings from /Users/amarmaruf/dev/dsse-group-project/wandb/settings
+2024-12-05 18:38:58,689 INFO    MainThread:80987 [wandb_setup.py:_flush():77] Loading settings from environment variables: {}
+2024-12-05 18:38:58,689 INFO    MainThread:80987 [wandb_setup.py:_flush():77] Inferring run settings from compute environment: {'program_relpath': 'score_mps_run.py', 'program_abspath': '/Users/amarmaruf/dev/dsse-group-project/score_mps_run.py', 'program': '/Users/amarmaruf/dev/dsse-group-project/score_mps_run.py'}
+2024-12-05 18:38:58,690 INFO    MainThread:80987 [wandb_setup.py:_flush():77] Applying login settings: {'api_key': '***REDACTED***'}
+2024-12-05 18:38:58,690 INFO    MainThread:80987 [wandb_setup.py:_flush():77] Applying login settings: {'api_key': '***REDACTED***'}
+2024-12-05 18:38:58,690 INFO    MainThread:80987 [wandb_setup.py:_flush():77] Applying login settings: {}
+2024-12-05 18:38:58,690 INFO    MainThread:80987 [wandb_init.py:_log_setup():524] Logging user logs to /Users/amarmaruf/dev/dsse-group-project/wandb/run-20241205_183858-7iw2zmq6/logs/debug.log
+2024-12-05 18:38:58,690 INFO    MainThread:80987 [wandb_init.py:_log_setup():525] Logging internal logs to /Users/amarmaruf/dev/dsse-group-project/wandb/run-20241205_183858-7iw2zmq6/logs/debug-internal.log
+2024-12-05 18:38:58,690 INFO    MainThread:80987 [wandb_init.py:init():607] calling init triggers
+2024-12-05 18:38:58,690 INFO    MainThread:80987 [wandb_init.py:init():614] wandb.init called with sweep_config: {}
+config: {'task': 'CODE', 'model_variant': 'Qwen/Qwen2.5-Coder-0.5B-Instruct', 'batch_size': 1, 'learning_rate': 1e-05, 'beta_1': 0.01, 'beta_2': 0.1, 'alpha': 5.0}
+2024-12-05 18:38:58,690 INFO    MainThread:80987 [wandb_init.py:init():657] starting backend
+2024-12-05 18:38:58,690 INFO    MainThread:80987 [wandb_init.py:init():661] setting up manager
+2024-12-05 18:38:58,692 INFO    MainThread:80987 [backend.py:_multiprocessing_setup():105] multiprocessing start_methods=spawn,fork,forkserver, using: spawn
+2024-12-05 18:38:58,695 INFO    MainThread:80987 [wandb_init.py:init():669] backend started and connected
+2024-12-05 18:38:58,700 INFO    MainThread:80987 [wandb_init.py:init():767] updated telemetry
+2024-12-05 18:38:58,732 INFO    MainThread:80987 [wandb_init.py:init():800] communicating run to backend with 90.0 second timeout
+2024-12-05 18:38:59,178 INFO    MainThread:80987 [wandb_init.py:init():851] starting run threads in backend
+2024-12-05 18:39:04,043 INFO    MainThread:80987 [wandb_run.py:_console_start():2463] atexit reg
+2024-12-05 18:39:04,043 INFO    MainThread:80987 [wandb_run.py:_redirect():2309] redirect: wrap_raw
+2024-12-05 18:39:04,043 INFO    MainThread:80987 [wandb_run.py:_redirect():2374] Wrapping output streams.
+2024-12-05 18:39:04,043 INFO    MainThread:80987 [wandb_run.py:_redirect():2399] Redirects installed.
+2024-12-05 18:39:04,045 INFO    MainThread:80987 [wandb_init.py:init():894] run started, returning control to user process
+2024-12-05 18:45:09,611 INFO    MainThread:80987 [wandb_run.py:_finish():2160] finishing run amarmaruf/score-training/7iw2zmq6
+2024-12-05 18:45:09,611 INFO    MainThread:80987 [wandb_run.py:_atexit_cleanup():2424] got exitcode: 0
+2024-12-05 18:45:09,611 INFO    MainThread:80987 [wandb_run.py:_restore():2406] restore
+2024-12-05 18:45:09,611 INFO    MainThread:80987 [wandb_run.py:_restore():2412] restore done
+2024-12-05 18:45:09,611 INFO    MainThread:80987 [wandb_run.py:_on_finish():2677] communicating current version
+2024-12-05 18:45:09,710 INFO    MainThread:80987 [wandb_run.py:_on_finish():2686] got version response upgrade_message: "wandb version 0.19.0 is available!  To upgrade, please run:\n $ pip install wandb --upgrade"
+
+2024-12-05 18:45:14,740 INFO    MainThread:80987 [wandb_run.py:_footer_history_summary_info():4078] rendering history
+2024-12-05 18:45:14,743 INFO    MainThread:80987 [wandb_run.py:_footer_history_summary_info():4110] rendering summary
+2024-12-05 18:45:14,751 INFO    MainThread:80987 [wandb_run.py:_footer_sync_info():4037] logging synced files

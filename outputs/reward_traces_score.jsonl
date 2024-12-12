@@ -1,0 +1,1348 @@
+{
+  "generated_code": {
+    "raw": "def max_sum(grid, m, n): \n    dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]\n    \n    # Iterate through each cell in the grid\n    for i in range(1, m + 1): \n        for j in range(1, n + 1): \n            # If the current cell is the first row or the first column\n            if i == 1 or j == 1: \n                # The maximum sum from the previous cell is the value at that cell\n                dp[i][j] = grid[i - 1][j - 1] \n            # Otherwise, add the maximum sum from either the previous cell\n            else: \n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + grid[i - 1][j - 1] \n    return max(dp[m][n])",
+    "cleaned": "def max_sum(grid, m, n): \n    dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]\n    \n    # Iterate through each cell in the grid\n    for i in range(1, m + 1): \n        for j in range(1, n + 1): \n            # If the current cell is the first row or the first column\n            if i == 1 or j == 1: \n                # The maximum sum from the previous cell is the value at that cell\n                dp[i][j] = grid[i - 1][j - 1] \n            # Otherwise, add the maximum sum from either the previous cell\n            else: \n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + grid[i - 1][j - 1] \n    return max(dp[m][n])",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert max_sum([ [1, 4, 5], [2, 0, 0 ] ], 3) == 7",
+        "passed": false,
+        "error": "max_sum() missing 1 required positional argument: 'n'"
+      },
+      {
+        "test_case": "assert max_sum([ [ 1, 2, 3, 4, 5], [ 6, 7, 8, 9, 10] ], 5) == 24",
+        "passed": false,
+        "error": "max_sum() missing 1 required positional argument: 'n'"
+      },
+      {
+        "test_case": "assert max_sum([ [7, 9, 11, 15, 19], [21, 25, 28, 31, 32] ], 5) == 81",
+        "passed": false,
+        "error": "max_sum() missing 1 required positional argument: 'n'"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 7.0,
+    "execution_time": 0.00106048583984375
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def max_sum(grid, m, n): \n    dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]\n    \n    # Iterate through each cell in the grid\n    for i in range(1, m + 1): \n        for j in range(1, n + 1): \n            # If the current cell is the first row or the first column\n            if i == 1 or j == 1: \n                # The maximum sum from the previous cell is the value at that cell\n                dp[i][j] = grid[i - 1][j - 1] \n            # Otherwise, add the maximum sum from either the previous cell\n            else: \n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + grid[i - 1][j - 1] \n    return max(dp[m][n])",
+    "cleaned": "def max_sum(grid, m, n): \n    dp = [[0 for _ in range(n + 1)] for _ in range(m + 1)]\n    \n    # Iterate through each cell in the grid\n    for i in range(1, m + 1): \n        for j in range(1, n + 1): \n            # If the current cell is the first row or the first column\n            if i == 1 or j == 1: \n                # The maximum sum from the previous cell is the value at that cell\n                dp[i][j] = grid[i - 1][j - 1] \n            # Otherwise, add the maximum sum from either the previous cell\n            else: \n                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]) + grid[i - 1][j - 1] \n    return max(dp[m][n])",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert max_sum([ [1, 4, 5], [2, 0, 0 ] ], 3) == 7",
+        "passed": false,
+        "error": "max_sum() missing 1 required positional argument: 'n'"
+      },
+      {
+        "test_case": "assert max_sum([ [ 1, 2, 3, 4, 5], [ 6, 7, 8, 9, 10] ], 5) == 24",
+        "passed": false,
+        "error": "max_sum() missing 1 required positional argument: 'n'"
+      },
+      {
+        "test_case": "assert max_sum([ [7, 9, 11, 15, 19], [21, 25, 28, 31, 32] ], 5) == 81",
+        "passed": false,
+        "error": "max_sum() missing 1 required positional argument: 'n'"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 7.0,
+    "execution_time": 0.0010631084442138672
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "lst = [3, 4, 5, 6]\nprint(count_integers(lst))  # Output: 4",
+    "cleaned": "lst = [3, 4, 5, 6]\nprint(count_integers(lst))  # Output: 4",
+    "ast_valid": true,
+    "execution_result": "failed: name 'count_integers' is not defined"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 0,
+    "execution_details": []
+  },
+  "metrics": {
+    "cyclomatic_complexity": 0.0,
+    "execution_time": null
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "lst = [3, 4, 5, 6]\nprint(count_integers(lst))  # Output: 4",
+    "cleaned": "lst = [3, 4, 5, 6]\nprint(count_integers(lst))  # Output: 4",
+    "ast_valid": true,
+    "execution_result": "failed: name 'count_integers' is not defined"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 0,
+    "execution_details": []
+  },
+  "metrics": {
+    "cyclomatic_complexity": 0.0,
+    "execution_time": null
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def sort_string(s):\n    s = ''.join(sorted(s))\n    return s",
+    "cleaned": "def sort_string(s):\n    s = ''.join(sorted(s))\n    return s",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "execution_details": [
+      {
+        "test_case": "assert sort_string(\"cba\") == \"abc\"",
+        "passed": true,
+        "error": null
+      },
+      {
+        "test_case": "assert sort_string(\"data\") == \"aadt\"",
+        "passed": true,
+        "error": null
+      },
+      {
+        "test_case": "assert sort_string(\"zxy\") == \"xyz\"",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 1.0,
+    "execution_time": 0.0008606910705566406
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def sort_string(s):\n    s = ''.join(sorted(s))\n    return s",
+    "cleaned": "def sort_string(s):\n    s = ''.join(sorted(s))\n    return s",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "execution_details": [
+      {
+        "test_case": "assert sort_string(\"cba\") == \"abc\"",
+        "passed": true,
+        "error": null
+      },
+      {
+        "test_case": "assert sort_string(\"data\") == \"aadt\"",
+        "passed": true,
+        "error": null
+      },
+      {
+        "test_case": "assert sort_string(\"zxy\") == \"xyz\"",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 1.0,
+    "execution_time": 0.0007693767547607422
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "import re\ndef max_number(text):\n    try:\n        # Split the text into words\n        words = text.split()\n        # Filter out non-numeric characters and convert them to integers\n        numeric_words = [int(word) for word in words if word.isdigit()]\n        # Find the maximum value in the list of numeric words\n        if numeric_words:\n            max_value = max(numeric_words)\n        else:\n            max_value = 0\n        return max_value\n    except ValueError:\n        # Return 0 if the input string does not contain numeric characters\n        return 0",
+    "cleaned": "import re\ndef max_number(text):\n    try:\n        # Split the text into words\n        words = text.split()\n        # Filter out non-numeric characters and convert them to integers\n        numeric_words = [int(word) for word in words if word.isdigit()]\n        # Find the maximum value in the list of numeric words\n        if numeric_words:\n            max_value = max(numeric_words)\n        else:\n            max_value = 0\n        return max_value\n    except ValueError:\n        # Return 0 if the input string does not contain numeric characters\n        return 0",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert max_number('100klh564abc365bg') == 564",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert max_number('hello300how546mer231') == 546",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert max_number('its233beenalong343journey234') == 343",
+        "passed": false,
+        "error": "Assertion failed"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 5.0,
+    "execution_time": 0.0007045269012451172
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "import re\ndef max_number(text):\n    try:\n        # Split the text into words\n        words = text.split()\n        # Filter out non-numeric characters and convert them to integers\n        numeric_words = [int(word) for word in words if word.isdigit()]\n        # Find the maximum value in the list of numeric words\n        if numeric_words:\n            max_value = max(numeric_words)\n        else:\n            max_value = 0\n        return max_value\n    except ValueError:\n        # Return 0 if the input string does not contain numeric characters\n        return 0",
+    "cleaned": "import re\ndef max_number(text):\n    try:\n        # Split the text into words\n        words = text.split()\n        # Filter out non-numeric characters and convert them to integers\n        numeric_words = [int(word) for word in words if word.isdigit()]\n        # Find the maximum value in the list of numeric words\n        if numeric_words:\n            max_value = max(numeric_words)\n        else:\n            max_value = 0\n        return max_value\n    except ValueError:\n        # Return 0 if the input string does not contain numeric characters\n        return 0",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert max_number('100klh564abc365bg') == 564",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert max_number('hello300how546mer231') == 546",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert max_number('its233beenalong343journey234') == 343",
+        "passed": false,
+        "error": "Assertion failed"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 5.0,
+    "execution_time": 0.0008232593536376953
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "from datetime import datetime\n\ndef date_converter(year, month, day):\n    # Create a datetime object from the provided date values\n    dt_object = datetime(year, month, day)\n    \n    # Format the datetime object into 'dd-mm-yyyy' format\n    formatted_date = dt_object.strftime('%d-%m-%Y')\n    \n    return formatted_date",
+    "cleaned": "from datetime import datetime\n\ndef date_converter(year, month, day):\n    # Create a datetime object from the provided date values\n    dt_object = datetime(year, month, day)\n    \n    # Format the datetime object into 'dd-mm-yyyy' format\n    formatted_date = dt_object.strftime('%d-%m-%Y')\n    \n    return formatted_date",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert date_converter('2026-01-02')=='02-01-2026'",
+        "passed": false,
+        "error": "date_converter() missing 2 required positional arguments: 'month' and 'day'"
+      },
+      {
+        "test_case": "assert date_converter('2021-01-04')=='04-01-2021'",
+        "passed": false,
+        "error": "date_converter() missing 2 required positional arguments: 'month' and 'day'"
+      },
+      {
+        "test_case": "assert date_converter('2030-06-06')=='06-06-2030'",
+        "passed": false,
+        "error": "date_converter() missing 2 required positional arguments: 'month' and 'day'"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 1.0,
+    "execution_time": 0.0009365081787109375
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "from datetime import datetime\n\ndef date_converter(year, month, day):\n    # Create a datetime object from the provided date values\n    dt_object = datetime(year, month, day)\n    \n    # Format the datetime object into 'dd-mm-yyyy' format\n    formatted_date = dt_object.strftime('%d-%m-%Y')\n    \n    return formatted_date",
+    "cleaned": "from datetime import datetime\n\ndef date_converter(year, month, day):\n    # Create a datetime object from the provided date values\n    dt_object = datetime(year, month, day)\n    \n    # Format the datetime object into 'dd-mm-yyyy' format\n    formatted_date = dt_object.strftime('%d-%m-%Y')\n    \n    return formatted_date",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert date_converter('2026-01-02')=='02-01-2026'",
+        "passed": false,
+        "error": "date_converter() missing 2 required positional arguments: 'month' and 'day'"
+      },
+      {
+        "test_case": "assert date_converter('2021-01-04')=='04-01-2021'",
+        "passed": false,
+        "error": "date_converter() missing 2 required positional arguments: 'month' and 'day'"
+      },
+      {
+        "test_case": "assert date_converter('2030-06-06')=='06-06-2030'",
+        "passed": false,
+        "error": "date_converter() missing 2 required positional arguments: 'month' and 'day'"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 1.0,
+    "execution_time": 0.0008356571197509766
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "import math\ndef is_valid_ellipse(a, b, f, c):\n    # Check if f is positive and c is negative\n    if f <= 0 or c < 0:\n        return False\n    # Check if a^2 > b^2\n    if a**2 > b**2:\n        return False\n    # Check if f is less than c\n    if f < c:\n        return True\n    return False\n\ndef find_largest_triangle(a, b, f, c):\n    # Calculate the semi-major and semi-minor axes\n    semi_major_axis = (b + c) / 2\n    semi_minor_axis = a\n    \n    # Check if the semi-major axis is longer than the semi-minor axis\n    if semi_major_axis > semi_minor_axis:\n        # Calculate the altitude of the triangle\n        altitude = c / (a - b)\n        # The area of the triangle can be calculated using Heron's formula\n        area = (math.sqrt(semi_major_axis * (semi_major_axis - semi_minor_axis) * (semi_major_axis - altitude) * (semi_minor_axis - altitude)))\n        # Check if the area is greater than or equal to f\n        if area >= f:\n            return True\n    return False\n\n# Example usage\na = 3\nb = 4\nf = 5\nc = 2\nprint(find_largest_triangle(a, b, f, c))  # Output: True",
+    "cleaned": "import math\ndef is_valid_ellipse(a, b, f, c):\n    # Check if f is positive and c is negative\n    if f <= 0 or c < 0:\n        return False\n    # Check if a^2 > b^2\n    if a**2 > b**2:\n        return False\n    # Check if f is less than c\n    if f < c:\n        return True\n    return False\n\ndef find_largest_triangle(a, b, f, c):\n    # Calculate the semi-major and semi-minor axes\n    semi_major_axis = (b + c) / 2\n    semi_minor_axis = a\n    \n    # Check if the semi-major axis is longer than the semi-minor axis\n    if semi_major_axis > semi_minor_axis:\n        # Calculate the altitude of the triangle\n        altitude = c / (a - b)\n        # The area of the triangle can be calculated using Heron's formula\n        area = (math.sqrt(semi_major_axis * (semi_major_axis - semi_minor_axis) * (semi_major_axis - altitude) * (semi_minor_axis - altitude)))\n        # Check if the area is greater than or equal to f\n        if area >= f:\n            return True\n    return False\n\n# Example usage\na = 3\nb = 4\nf = 5\nc = 2\nprint(find_largest_triangle(a, b, f, c))  # Output: True",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert find_largest_triangle(4,2)==10.392304845413264",
+        "passed": false,
+        "error": "find_largest_triangle() missing 2 required positional arguments: 'f' and 'c'"
+      },
+      {
+        "test_case": "assert find_largest_triangle(5,7)==4.639421805988064",
+        "passed": false,
+        "error": "find_largest_triangle() missing 2 required positional arguments: 'f' and 'c'"
+      },
+      {
+        "test_case": "assert find_largest_triangle(9,1)==105.2220865598093",
+        "passed": false,
+        "error": "find_largest_triangle() missing 2 required positional arguments: 'f' and 'c'"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 4.0,
+    "execution_time": 0.0012090206146240234
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "import math\ndef is_valid_ellipse(a, b, f, c):\n    # Check if f is positive and c is negative\n    if f <= 0 or c < 0:\n        return False\n    # Check if a^2 > b^2\n    if a**2 > b**2:\n        return False\n    # Check if f is less than c\n    if f < c:\n        return True\n    return False\n\ndef find_largest_triangle(a, b, f, c):\n    # Calculate the semi-major and semi-minor axes\n    semi_major_axis = (b + c) / 2\n    semi_minor_axis = a\n    \n    # Check if the semi-major axis is longer than the semi-minor axis\n    if semi_major_axis > semi_minor_axis:\n        # Calculate the altitude of the triangle\n        altitude = c / (a - b)\n        # The area of the triangle can be calculated using Heron's formula\n        area = (math.sqrt(semi_major_axis * (semi_major_axis - semi_minor_axis) * (semi_major_axis - altitude) * (semi_minor_axis - altitude)))\n        # Check if the area is greater than or equal to f\n        if area >= f:\n            return True\n    return False\n\n# Example usage\na = 3\nb = 4\nf = 5\nc = 2\nprint(find_largest_triangle(a, b, f, c))  # Output: True",
+    "cleaned": "import math\ndef is_valid_ellipse(a, b, f, c):\n    # Check if f is positive and c is negative\n    if f <= 0 or c < 0:\n        return False\n    # Check if a^2 > b^2\n    if a**2 > b**2:\n        return False\n    # Check if f is less than c\n    if f < c:\n        return True\n    return False\n\ndef find_largest_triangle(a, b, f, c):\n    # Calculate the semi-major and semi-minor axes\n    semi_major_axis = (b + c) / 2\n    semi_minor_axis = a\n    \n    # Check if the semi-major axis is longer than the semi-minor axis\n    if semi_major_axis > semi_minor_axis:\n        # Calculate the altitude of the triangle\n        altitude = c / (a - b)\n        # The area of the triangle can be calculated using Heron's formula\n        area = (math.sqrt(semi_major_axis * (semi_major_axis - semi_minor_axis) * (semi_major_axis - altitude) * (semi_minor_axis - altitude)))\n        # Check if the area is greater than or equal to f\n        if area >= f:\n            return True\n    return False\n\n# Example usage\na = 3\nb = 4\nf = 5\nc = 2\nprint(find_largest_triangle(a, b, f, c))  # Output: True",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert find_largest_triangle(4,2)==10.392304845413264",
+        "passed": false,
+        "error": "find_largest_triangle() missing 2 required positional arguments: 'f' and 'c'"
+      },
+      {
+        "test_case": "assert find_largest_triangle(5,7)==4.639421805988064",
+        "passed": false,
+        "error": "find_largest_triangle() missing 2 required positional arguments: 'f' and 'c'"
+      },
+      {
+        "test_case": "assert find_largest_triangle(9,1)==105.2220865598093",
+        "passed": false,
+        "error": "find_largest_triangle() missing 2 required positional arguments: 'f' and 'c'"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 4.0,
+    "execution_time": 0.0011255741119384766
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def int_to_roman(num):\n    result = ''\n    for value, symbol in mapping.items():\n        while num >= value:\n            result += symbol\n            num -= value\n    return result\n\n# Test the function with the provided test cases\nassert int_to_roman(19) == 'xix'\nassert int_to_roman(42) == 'xlII'\nassert int_to_roman(100) == 'c'\nassert int_to_roman(404) == 'cdxxiv'",
+    "cleaned": "def int_to_roman(num):\n    result = ''\n    for value, symbol in mapping.items():\n        while num >= value:\n            result += symbol\n            num -= value\n    return result\n\n# Test the function with the provided test cases\nassert int_to_roman(19) == 'xix'\nassert int_to_roman(42) == 'xlII'\nassert int_to_roman(100) == 'c'\nassert int_to_roman(404) == 'cdxxiv'",
+    "ast_valid": true,
+    "execution_result": "failed: name 'mapping' is not defined"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 0,
+    "execution_details": []
+  },
+  "metrics": {
+    "cyclomatic_complexity": 0.0,
+    "execution_time": null
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def int_to_roman(num):\n    result = ''\n    for value, symbol in mapping.items():\n        while num >= value:\n            result += symbol\n            num -= value\n    return result\n\n# Test the function with the provided test cases\nassert int_to_roman(19) == 'xix'\nassert int_to_roman(42) == 'xlII'\nassert int_to_roman(100) == 'c'\nassert int_to_roman(404) == 'cdxxiv'",
+    "cleaned": "def int_to_roman(num):\n    result = ''\n    for value, symbol in mapping.items():\n        while num >= value:\n            result += symbol\n            num -= value\n    return result\n\n# Test the function with the provided test cases\nassert int_to_roman(19) == 'xix'\nassert int_to_roman(42) == 'xlII'\nassert int_to_roman(100) == 'c'\nassert int_to_roman(404) == 'cdxxiv'",
+    "ast_valid": true,
+    "execution_result": "failed: name 'mapping' is not defined"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 0,
+    "execution_details": []
+  },
+  "metrics": {
+    "cyclomatic_complexity": 0.0,
+    "execution_time": null
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def find_peak(arr):\n    if len(arr) <= 1:\n        return arr[0]\n    # Base case: if the array contains only one element, it's the peak\n    elif len(arr) == 2:\n        if arr[0] > arr[1]:\n            return arr[0]\n        else:\n            return arr[1]\n    \n    # Recursive case:\n    mid = len(arr) // 2\n    peak_left = find_peak(arr[:mid])  # Find peak in the left sub-array\n    peak_right = find_peak(arr[mid+1:]) # Find peak in the right sub-array\n    \n    # Return the maximum of the two peaks\n    return max(peak_left, peak_right)",
+    "cleaned": "def find_peak(arr):\n    if len(arr) <= 1:\n        return arr[0]\n    # Base case: if the array contains only one element, it's the peak\n    elif len(arr) == 2:\n        if arr[0] > arr[1]:\n            return arr[0]\n        else:\n            return arr[1]\n    \n    # Recursive case:\n    mid = len(arr) // 2\n    peak_left = find_peak(arr[:mid])  # Find peak in the left sub-array\n    peak_right = find_peak(arr[mid+1:]) # Find peak in the right sub-array\n    \n    # Return the maximum of the two peaks\n    return max(peak_left, peak_right)",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert find_peak([1, 3, 20, 4, 1, 0], 6) == 2",
+        "passed": false,
+        "error": "find_peak() takes 1 positional argument but 2 were given"
+      },
+      {
+        "test_case": "assert find_peak([2, 3, 4, 5, 6], 5) == 4",
+        "passed": false,
+        "error": "find_peak() takes 1 positional argument but 2 were given"
+      },
+      {
+        "test_case": "assert find_peak([8, 9, 11, 12, 14, 15], 6) == 5 ",
+        "passed": false,
+        "error": "find_peak() takes 1 positional argument but 2 were given"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 4.0,
+    "execution_time": 0.0005774497985839844
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def find_peak(arr):\n    if len(arr) <= 1:\n        return arr[0]\n    # Base case: if the array contains only one element, it's the peak\n    elif len(arr) == 2:\n        if arr[0] > arr[1]:\n            return arr[0]\n        else:\n            return arr[1]\n    \n    # Recursive case:\n    mid = len(arr) // 2\n    peak_left = find_peak(arr[:mid])  # Find peak in the left sub-array\n    peak_right = find_peak(arr[mid+1:]) # Find peak in the right sub-array\n    \n    # Return the maximum of the two peaks\n    return max(peak_left, peak_right)",
+    "cleaned": "def find_peak(arr):\n    if len(arr) <= 1:\n        return arr[0]\n    # Base case: if the array contains only one element, it's the peak\n    elif len(arr) == 2:\n        if arr[0] > arr[1]:\n            return arr[0]\n        else:\n            return arr[1]\n    \n    # Recursive case:\n    mid = len(arr) // 2\n    peak_left = find_peak(arr[:mid])  # Find peak in the left sub-array\n    peak_right = find_peak(arr[mid+1:]) # Find peak in the right sub-array\n    \n    # Return the maximum of the two peaks\n    return max(peak_left, peak_right)",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert find_peak([1, 3, 20, 4, 1, 0], 6) == 2",
+        "passed": false,
+        "error": "find_peak() takes 1 positional argument but 2 were given"
+      },
+      {
+        "test_case": "assert find_peak([2, 3, 4, 5, 6], 5) == 4",
+        "passed": false,
+        "error": "find_peak() takes 1 positional argument but 2 were given"
+      },
+      {
+        "test_case": "assert find_peak([8, 9, 11, 12, 14, 15], 6) == 5 ",
+        "passed": false,
+        "error": "find_peak() takes 1 positional argument but 2 were given"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 4.0,
+    "execution_time": 0.0007548332214355469
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "import math\n\ndef babylonian_sqrt(number):\n    if number < 0:\n        raise ValueError(\"Cannot compute square root of negative numbers\")\n    \n    # Initial approximation\n    approx_num = number ** 0.5\n    \n    # Check if the approximation is a perfect square\n    if abs(approx_num - int(approx_num)) < 1e-10:\n        return int(approx_num)\n    \n    # Adjust the approximation if it is not a perfect square\n    while abs(approx_num ** 2 - number) >= 1e-10:\n        approx_num -= ((approx_num ** 2 - number) / (2 * approx_num)) ** 2\n    \n    # Return the rounded approximation\n    return round(approx_num)\n\n# Example usage\nprint(babylonian_sqrt(2))   # Output: 1\nprint(babylonian_sqrt(10))  # Output: 3.16227766016838\nprint(babylonian_sqrt(35)) # Output: 5\nprint(babylonian_sqrt(-35)) # Output: ValueError: Cannot compute square root of negative numbers",
+    "cleaned": "import math\n\ndef babylonian_sqrt(number):\n    if number < 0:\n        raise ValueError(\"Cannot compute square root of negative numbers\")\n    \n    # Initial approximation\n    approx_num = number ** 0.5\n    \n    # Check if the approximation is a perfect square\n    if abs(approx_num - int(approx_num)) < 1e-10:\n        return int(approx_num)\n    \n    # Adjust the approximation if it is not a perfect square\n    while abs(approx_num ** 2 - number) >= 1e-10:\n        approx_num -= ((approx_num ** 2 - number) / (2 * approx_num)) ** 2\n    \n    # Return the rounded approximation\n    return round(approx_num)\n\n# Example usage\nprint(babylonian_sqrt(2))   # Output: 1\nprint(babylonian_sqrt(10))  # Output: 3.16227766016838\nprint(babylonian_sqrt(35)) # Output: 5\nprint(babylonian_sqrt(-35)) # Output: ValueError: Cannot compute square root of negative numbers",
+    "ast_valid": true,
+    "execution_result": "failed: Cannot compute square root of negative numbers"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 0,
+    "execution_details": []
+  },
+  "metrics": {
+    "cyclomatic_complexity": 0.0,
+    "execution_time": null
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "import math\n\ndef babylonian_sqrt(number):\n    if number < 0:\n        raise ValueError(\"Cannot compute square root of negative numbers\")\n    \n    # Initial approximation\n    approx_num = number ** 0.5\n    \n    # Check if the approximation is a perfect square\n    if abs(approx_num - int(approx_num)) < 1e-10:\n        return int(approx_num)\n    \n    # Adjust the approximation if it is not a perfect square\n    while abs(approx_num ** 2 - number) >= 1e-10:\n        approx_num -= ((approx_num ** 2 - number) / (2 * approx_num)) ** 2\n    \n    # Return the rounded approximation\n    return round(approx_num)\n\n# Example usage\nprint(babylonian_sqrt(2))   # Output: 1\nprint(babylonian_sqrt(10))  # Output: 3.16227766016838\nprint(babylonian_sqrt(35)) # Output: 5\nprint(babylonian_sqrt(-35)) # Output: ValueError: Cannot compute square root of negative numbers",
+    "cleaned": "import math\n\ndef babylonian_sqrt(number):\n    if number < 0:\n        raise ValueError(\"Cannot compute square root of negative numbers\")\n    \n    # Initial approximation\n    approx_num = number ** 0.5\n    \n    # Check if the approximation is a perfect square\n    if abs(approx_num - int(approx_num)) < 1e-10:\n        return int(approx_num)\n    \n    # Adjust the approximation if it is not a perfect square\n    while abs(approx_num ** 2 - number) >= 1e-10:\n        approx_num -= ((approx_num ** 2 - number) / (2 * approx_num)) ** 2\n    \n    # Return the rounded approximation\n    return round(approx_num)\n\n# Example usage\nprint(babylonian_sqrt(2))   # Output: 1\nprint(babylonian_sqrt(10))  # Output: 3.16227766016838\nprint(babylonian_sqrt(35)) # Output: 5\nprint(babylonian_sqrt(-35)) # Output: ValueError: Cannot compute square root of negative numbers",
+    "ast_valid": true,
+    "execution_result": "failed: Cannot compute square root of negative numbers"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 0,
+    "execution_details": []
+  },
+  "metrics": {
+    "cyclomatic_complexity": 0.0,
+    "execution_time": null
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def toggle_bit(number):\n    # Get the bits of the number\n    bits = [int(digit) for digit in bin(number)]\n    # Toggle the first and last bits\n    bits[0] ^= 1\n    bits[-1] ^= 1\n    # Convert the list back to a binary string\n    return int(''.join(str(bit) for bit in bits), 2)",
+    "cleaned": "def toggle_bit(number):\n    # Get the bits of the number\n    bits = [int(digit) for digit in bin(number)]\n    # Toggle the first and last bits\n    bits[0] ^= 1\n    bits[-1] ^= 1\n    # Convert the list back to a binary string\n    return int(''.join(str(bit) for bit in bits), 2)",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert toggle_bit(10) == 3",
+        "passed": false,
+        "error": "invalid literal for int() with base 10: 'b'"
+      },
+      {
+        "test_case": "assert toggle_bit(15) == 6",
+        "passed": false,
+        "error": "invalid literal for int() with base 10: 'b'"
+      },
+      {
+        "test_case": "assert toggle_bit(20) == 5",
+        "passed": false,
+        "error": "invalid literal for int() with base 10: 'b'"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 3.0,
+    "execution_time": 0.0005331039428710938
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def toggle_bit(number):\n    # Get the bits of the number\n    bits = [int(digit) for digit in bin(number)]\n    # Toggle the first and last bits\n    bits[0] ^= 1\n    bits[-1] ^= 1\n    # Convert the list back to a binary string\n    return int(''.join(str(bit) for bit in bits), 2)",
+    "cleaned": "def toggle_bit(number):\n    # Get the bits of the number\n    bits = [int(digit) for digit in bin(number)]\n    # Toggle the first and last bits\n    bits[0] ^= 1\n    bits[-1] ^= 1\n    # Convert the list back to a binary string\n    return int(''.join(str(bit) for bit in bits), 2)",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert toggle_bit(10) == 3",
+        "passed": false,
+        "error": "invalid literal for int() with base 10: 'b'"
+      },
+      {
+        "test_case": "assert toggle_bit(15) == 6",
+        "passed": false,
+        "error": "invalid literal for int() with base 10: 'b'"
+      },
+      {
+        "test_case": "assert toggle_bit(20) == 5",
+        "passed": false,
+        "error": "invalid literal for int() with base 10: 'b'"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 3.0,
+    "execution_time": 0.0006101131439208984
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def find_last_removed_element(arr):\n    arr.sort(reverse=True)\n    arr.pop()\n    return arr[-1]",
+    "cleaned": "def find_last_removed_element(arr):\n    arr.sort(reverse=True)\n    arr.pop()\n    return arr[-1]",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert find_last_removed_element([2,5,4],3,2) == 2",
+        "passed": false,
+        "error": "find_last_removed_element() takes 1 positional argument but 3 were given"
+      },
+      {
+        "test_case": "assert find_last_removed_element([4,3],2,2) == 2",
+        "passed": false,
+        "error": "find_last_removed_element() takes 1 positional argument but 3 were given"
+      },
+      {
+        "test_case": "assert find_last_removed_element([1,2,3,4],4,1) == 4",
+        "passed": false,
+        "error": "find_last_removed_element() takes 1 positional argument but 3 were given"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 1.0,
+    "execution_time": 0.0011260509490966797
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def find_last_removed_element(arr):\n    arr.sort(reverse=True)\n    arr.pop()\n    return arr[-1]",
+    "cleaned": "def find_last_removed_element(arr):\n    arr.sort(reverse=True)\n    arr.pop()\n    return arr[-1]",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert find_last_removed_element([2,5,4],3,2) == 2",
+        "passed": false,
+        "error": "find_last_removed_element() takes 1 positional argument but 3 were given"
+      },
+      {
+        "test_case": "assert find_last_removed_element([4,3],2,2) == 2",
+        "passed": false,
+        "error": "find_last_removed_element() takes 1 positional argument but 3 were given"
+      },
+      {
+        "test_case": "assert find_last_removed_element([1,2,3,4],4,1) == 4",
+        "passed": false,
+        "error": "find_last_removed_element() takes 1 positional argument but 3 were given"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 1.0,
+    "execution_time": 0.0010273456573486328
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "import math\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    if n <= 3:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\ndef square_root(n):\n    # Check if the number is prime\n    if is_prime(n):\n        return n\n    # Start checking from the square of the smallest prime number\n    for i in range(int(math.sqrt(n)) + 1):\n        # Check if the square root squared equals n\n        if (i * i) == n:\n            return i\n    # If we complete the loop without finding a divisor, the number is prime\n    return -1\n\n# Test cases\nprint(square_root(2))          # Output: 1\nprint(square_root(10))         # Output: 5\nprint(square_root(35))        # Output: 5\nprint(square_root(19))        # Output: 4\nprint(square_root(69))       # Output: 17",
+    "cleaned": "import math\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    if n <= 3:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\ndef square_root(n):\n    # Check if the number is prime\n    if is_prime(n):\n        return n\n    # Start checking from the square of the smallest prime number\n    for i in range(int(math.sqrt(n)) + 1):\n        # Check if the square root squared equals n\n        if (i * i) == n:\n            return i\n    # If we complete the loop without finding a divisor, the number is prime\n    return -1\n\n# Test cases\nprint(square_root(2))          # Output: 1\nprint(square_root(10))         # Output: 5\nprint(square_root(35))        # Output: 5\nprint(square_root(19))        # Output: 4\nprint(square_root(69))       # Output: 17",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "execution_details": [
+      {
+        "test_case": "assert square_root(4)==2",
+        "passed": true,
+        "error": null
+      },
+      {
+        "test_case": "assert square_root(16)==4",
+        "passed": true,
+        "error": null
+      },
+      {
+        "test_case": "assert square_root(400)==20",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 6.0,
+    "execution_time": 0.0012559890747070312
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "import math\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    if n <= 3:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\ndef square_root(n):\n    # Check if the number is prime\n    if is_prime(n):\n        return n\n    # Start checking from the square of the smallest prime number\n    for i in range(int(math.sqrt(n)) + 1):\n        # Check if the square root squared equals n\n        if (i * i) == n:\n            return i\n    # If we complete the loop without finding a divisor, the number is prime\n    return -1\n\n# Test cases\nprint(square_root(2))          # Output: 1\nprint(square_root(10))         # Output: 5\nprint(square_root(35))        # Output: 5\nprint(square_root(19))        # Output: 4\nprint(square_root(69))       # Output: 17",
+    "cleaned": "import math\n\ndef is_prime(n):\n    if n <= 1:\n        return False\n    if n <= 3:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return False\n        i += 6\n    return True\n\ndef square_root(n):\n    # Check if the number is prime\n    if is_prime(n):\n        return n\n    # Start checking from the square of the smallest prime number\n    for i in range(int(math.sqrt(n)) + 1):\n        # Check if the square root squared equals n\n        if (i * i) == n:\n            return i\n    # If we complete the loop without finding a divisor, the number is prime\n    return -1\n\n# Test cases\nprint(square_root(2))          # Output: 1\nprint(square_root(10))         # Output: 5\nprint(square_root(35))        # Output: 5\nprint(square_root(19))        # Output: 4\nprint(square_root(69))       # Output: 17",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "execution_details": [
+      {
+        "test_case": "assert square_root(4)==2",
+        "passed": true,
+        "error": null
+      },
+      {
+        "test_case": "assert square_root(16)==4",
+        "passed": true,
+        "error": null
+      },
+      {
+        "test_case": "assert square_root(400)==20",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 6.0,
+    "execution_time": 0.0012121200561523438
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "from functools import partial\n\ndef get_item(item):\n    return partial(get_item, item)[1]\n\ndef find_element(item_list, target):\n    for item in item_list:\n        if item == target:\n            return item\n    return None",
+    "cleaned": "from functools import partial\n\ndef get_item(item):\n    return partial(get_item, item)[1]\n\ndef find_element(item_list, target):\n    for item in item_list:\n        if item == target:\n            return item\n    return None",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert find_element((\"w\", 3, \"r\", \"e\", \"s\", \"o\", \"u\", \"r\", \"c\", \"e\"),3)==('e')",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert find_element((\"w\", 3, \"r\", \"e\", \"s\", \"o\", \"u\", \"r\", \"c\", \"e\"),-4)==('u')",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert find_element((\"w\", 3, \"r\", \"e\", \"s\", \"o\", \"u\", \"r\", \"c\", \"e\"),-3)==('r')",
+        "passed": false,
+        "error": "Assertion failed"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 2.0,
+    "execution_time": 0.0009963512420654297
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "from functools import partial\n\ndef get_item(item):\n    return partial(get_item, item)[1]\n\ndef find_element(item_list, target):\n    for item in item_list:\n        if item == target:\n            return item\n    return None",
+    "cleaned": "from functools import partial\n\ndef get_item(item):\n    return partial(get_item, item)[1]\n\ndef find_element(item_list, target):\n    for item in item_list:\n        if item == target:\n            return item\n    return None",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert find_element((\"w\", 3, \"r\", \"e\", \"s\", \"o\", \"u\", \"r\", \"c\", \"e\"),3)==('e')",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert find_element((\"w\", 3, \"r\", \"e\", \"s\", \"o\", \"u\", \"r\", \"c\", \"e\"),-4)==('u')",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert find_element((\"w\", 3, \"r\", \"e\", \"s\", \"o\", \"u\", \"r\", \"c\", \"e\"),-3)==('r')",
+        "passed": false,
+        "error": "Assertion failed"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 2.0,
+    "execution_time": 0.0009281635284423828
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def max_difference(arr):\n    \"\"\"\n    Given an array of numbers, returns the maximum difference between any two consecutive elements.\n\n    Args:\n    arr (list): List of integers.\n\n    Returns:\n    int: Maximum difference between any two consecutive elements.\n    \"\"\"\n    # Calculating the absolute difference of each pair of consecutive elements\n    difference = [(b-a) for a, b in zip(arr[:-1], arr[1:])]\n    \n    # Find the maximum difference among the absolute differences\n    max_diff = max(difference)\n\n    return max_diff",
+    "cleaned": "def max_difference(arr):\n    \"\"\"\n    Given an array of numbers, returns the maximum difference between any two consecutive elements.\n\n    Args:\n    arr (list): List of integers.\n\n    Returns:\n    int: Maximum difference between any two consecutive elements.\n    \"\"\"\n    # Calculating the absolute difference of each pair of consecutive elements\n    difference = [(b-a) for a, b in zip(arr[:-1], arr[1:])]\n    \n    # Find the maximum difference among the absolute differences\n    max_diff = max(difference)\n\n    return max_diff",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert max_difference((2,1,5,3),4) == 4",
+        "passed": false,
+        "error": "max_difference() takes 1 positional argument but 2 were given"
+      },
+      {
+        "test_case": "assert max_difference((9,3,2,5,1),5) == 8",
+        "passed": false,
+        "error": "max_difference() takes 1 positional argument but 2 were given"
+      },
+      {
+        "test_case": "assert max_difference((3,2,1),3) == 2",
+        "passed": false,
+        "error": "max_difference() takes 1 positional argument but 2 were given"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 2.0,
+    "execution_time": 0.0009717941284179688
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def max_difference(arr):\n    \"\"\"\n    Given an array of numbers, returns the maximum difference between any two consecutive elements.\n\n    Args:\n    arr (list): List of integers.\n\n    Returns:\n    int: Maximum difference between any two consecutive elements.\n    \"\"\"\n    # Calculating the absolute difference of each pair of consecutive elements\n    difference = [(b-a) for a, b in zip(arr[:-1], arr[1:])]\n    \n    # Find the maximum difference among the absolute differences\n    max_diff = max(difference)\n\n    return max_diff",
+    "cleaned": "def max_difference(arr):\n    \"\"\"\n    Given an array of numbers, returns the maximum difference between any two consecutive elements.\n\n    Args:\n    arr (list): List of integers.\n\n    Returns:\n    int: Maximum difference between any two consecutive elements.\n    \"\"\"\n    # Calculating the absolute difference of each pair of consecutive elements\n    difference = [(b-a) for a, b in zip(arr[:-1], arr[1:])]\n    \n    # Find the maximum difference among the absolute differences\n    max_diff = max(difference)\n\n    return max_diff",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert max_difference((2,1,5,3),4) == 4",
+        "passed": false,
+        "error": "max_difference() takes 1 positional argument but 2 were given"
+      },
+      {
+        "test_case": "assert max_difference((9,3,2,5,1),5) == 8",
+        "passed": false,
+        "error": "max_difference() takes 1 positional argument but 2 were given"
+      },
+      {
+        "test_case": "assert max_difference((3,2,1),3) == 2",
+        "passed": false,
+        "error": "max_difference() takes 1 positional argument but 2 were given"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 2.0,
+    "execution_time": 0.0008549690246582031
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def first_digit_in_factorial(num):\n    # Initialize result variable with 0\n    result = 0\n    # Loop through digits of the number\n    while num > 0:\n        # Get the last digit using modulus operator\n        last_digit = num % 10\n        # Multiply the result by 10 and add the last digit\n        result *= 10\n        # Remove the last digit from the number\n        num //= 10\n    return result\n\n# Test cases\nprint(first_digit_in_factorial(0)) # Output should be 0\nprint(first_digit_in_factorial(5)) # Output should be 5\nprint(first_digit_in_factorial(15)) # Output should be 15\nprint(first_digit_in_factorial(50)) # Output should be 5\nprint(first_digit_in_factorial(01)) # Output should be 0\nprint(first_digit_in_factorial(9)) # Output should be 9",
+    "cleaned": "def first_digit_in_factorial(num):\n    # Initialize result variable with 0\n    result = 0\n    # Loop through digits of the number\n    while num > 0:\n        # Get the last digit using modulus operator\n        last_digit = num % 10\n        # Multiply the result by 10 and add the last digit\n        result *= 10\n        # Remove the last digit from the number\n        num //= 10\n    return result\n\n# Test cases\nprint(first_digit_in_factorial(0)) # Output should be 0\nprint(first_digit_in_factorial(5)) # Output should be 5\nprint(first_digit_in_factorial(15)) # Output should be 15\nprint(first_digit_in_factorial(50)) # Output should be 5\nprint(first_digit_in_factorial(01)) # Output should be 0\nprint(first_digit_in_factorial(9)) # Output should be 9",
+    "ast_valid": false,
+    "execution_result": null
+  },
+  "test_cases": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "execution_details": []
+  },
+  "metrics": {
+    "cyclomatic_complexity": 0.0,
+    "execution_time": null
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def first_digit_in_factorial(num):\n    # Initialize result variable with 0\n    result = 0\n    # Loop through digits of the number\n    while num > 0:\n        # Get the last digit using modulus operator\n        last_digit = num % 10\n        # Multiply the result by 10 and add the last digit\n        result *= 10\n        # Remove the last digit from the number\n        num //= 10\n    return result\n\n# Test cases\nprint(first_digit_in_factorial(0)) # Output should be 0\nprint(first_digit_in_factorial(5)) # Output should be 5\nprint(first_digit_in_factorial(15)) # Output should be 15\nprint(first_digit_in_factorial(50)) # Output should be 5\nprint(first_digit_in_factorial(01)) # Output should be 0\nprint(first_digit_in_factorial(9)) # Output should be 9",
+    "cleaned": "def first_digit_in_factorial(num):\n    # Initialize result variable with 0\n    result = 0\n    # Loop through digits of the number\n    while num > 0:\n        # Get the last digit using modulus operator\n        last_digit = num % 10\n        # Multiply the result by 10 and add the last digit\n        result *= 10\n        # Remove the last digit from the number\n        num //= 10\n    return result\n\n# Test cases\nprint(first_digit_in_factorial(0)) # Output should be 0\nprint(first_digit_in_factorial(5)) # Output should be 5\nprint(first_digit_in_factorial(15)) # Output should be 15\nprint(first_digit_in_factorial(50)) # Output should be 5\nprint(first_digit_in_factorial(01)) # Output should be 0\nprint(first_digit_in_factorial(9)) # Output should be 9",
+    "ast_valid": false,
+    "execution_result": null
+  },
+  "test_cases": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "execution_details": []
+  },
+  "metrics": {
+    "cyclomatic_complexity": 0.0,
+    "execution_time": null
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "import re\n\ndef match_string(s):\n    # Define a regular expression pattern that matches 'a' followed by two or three 'b'\n    pattern = 'ab{2,3}'\n    \n    # Use the re.match() function to check if the string starts with 'a' and matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False\n\n# Test cases\nprint(match_string(\"abc\"))  # False\nprint(match_string(\"ab\"))   # True\nprint(match_string(\"aabbcc\")) # True\nprint(match_string(\"abbbbccc\")) # True\nprint(match_string(\"abbbbbbb\")) # False",
+    "cleaned": "import re\n\ndef match_string(s):\n    # Define a regular expression pattern that matches 'a' followed by two or three 'b'\n    pattern = 'ab{2,3}'\n    \n    # Use the re.match() function to check if the string starts with 'a' and matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False\n\n# Test cases\nprint(match_string(\"abc\"))  # False\nprint(match_string(\"ab\"))   # True\nprint(match_string(\"aabbcc\")) # True\nprint(match_string(\"abbbbccc\")) # True\nprint(match_string(\"abbbbbbb\")) # False",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert match_string(\"ac\")==('Not matched!')",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert match_string(\"dc\")==('Not matched!')",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert match_string(\"abbbba\")==('Found a match!')",
+        "passed": false,
+        "error": "Assertion failed"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 2.0,
+    "execution_time": 0.001955747604370117
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "import re\n\ndef match_string(s):\n    # Define a regular expression pattern that matches 'a' followed by two or three 'b'\n    pattern = 'ab{2,3}'\n    \n    # Use the re.match() function to check if the string starts with 'a' and matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False\n\n# Test cases\nprint(match_string(\"abc\"))  # False\nprint(match_string(\"ab\"))   # True\nprint(match_string(\"aabbcc\")) # True\nprint(match_string(\"abbbbccc\")) # True\nprint(match_string(\"abbbbbbb\")) # False",
+    "cleaned": "import re\n\ndef match_string(s):\n    # Define a regular expression pattern that matches 'a' followed by two or three 'b'\n    pattern = 'ab{2,3}'\n    \n    # Use the re.match() function to check if the string starts with 'a' and matches the pattern\n    if re.match(pattern, s):\n        return True\n    else:\n        return False\n\n# Test cases\nprint(match_string(\"abc\"))  # False\nprint(match_string(\"ab\"))   # True\nprint(match_string(\"aabbcc\")) # True\nprint(match_string(\"abbbbccc\")) # True\nprint(match_string(\"abbbbbbb\")) # False",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert match_string(\"ac\")==('Not matched!')",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert match_string(\"dc\")==('Not matched!')",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert match_string(\"abbbba\")==('Found a match!')",
+        "passed": false,
+        "error": "Assertion failed"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 2.0,
+    "execution_time": 0.0014972686767578125
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def is_perfect_square(num):\n    # Calculate the integer square root of num\n    sqrt_num = int(math.sqrt(num))\n    \n    # Check if the square of the integer square root is less than or equal to num\n    if sqrt_num * sqrt_num <= num:\n        return True\n    else:\n        return False\n\n# Example usage:\nprint(is_perfect_square(16))  # True\nprint(is_perfect_square(18))  # False",
+    "cleaned": "def is_perfect_square(num):\n    # Calculate the integer square root of num\n    sqrt_num = int(math.sqrt(num))\n    \n    # Check if the square of the integer square root is less than or equal to num\n    if sqrt_num * sqrt_num <= num:\n        return True\n    else:\n        return False\n\n# Example usage:\nprint(is_perfect_square(16))  # True\nprint(is_perfect_square(18))  # False",
+    "ast_valid": true,
+    "execution_result": "failed: name 'math' is not defined"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 0,
+    "execution_details": []
+  },
+  "metrics": {
+    "cyclomatic_complexity": 0.0,
+    "execution_time": null
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def is_perfect_square(num):\n    # Calculate the integer square root of num\n    sqrt_num = int(math.sqrt(num))\n    \n    # Check if the square of the integer square root is less than or equal to num\n    if sqrt_num * sqrt_num <= num:\n        return True\n    else:\n        return False\n\n# Example usage:\nprint(is_perfect_square(16))  # True\nprint(is_perfect_square(18))  # False",
+    "cleaned": "def is_perfect_square(num):\n    # Calculate the integer square root of num\n    sqrt_num = int(math.sqrt(num))\n    \n    # Check if the square of the integer square root is less than or equal to num\n    if sqrt_num * sqrt_num <= num:\n        return True\n    else:\n        return False\n\n# Example usage:\nprint(is_perfect_square(16))  # True\nprint(is_perfect_square(18))  # False",
+    "ast_valid": true,
+    "execution_result": "failed: name 'math' is not defined"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 0,
+    "execution_details": []
+  },
+  "metrics": {
+    "cyclomatic_complexity": 0.0,
+    "execution_time": null
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "import re\n\ndef extract_between_quotation(s):\n    # Using regular expression to match any string enclosed in single quotes ('')\n    matches = re.findall(r'\\''\\s*(.*?)\\s*'''\n    # Return the extracted values as a list\n    return matches",
+    "cleaned": "import re\n\ndef extract_between_quotation(s):\n    # Using regular expression to match any string enclosed in single quotes ('')\n    matches = re.findall(r'\\''\\s*(.*?)\\s*'''\n    # Return the extracted values as a list\n    return matches",
+    "ast_valid": false,
+    "execution_result": null
+  },
+  "test_cases": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "execution_details": []
+  },
+  "metrics": {
+    "cyclomatic_complexity": 0.0,
+    "execution_time": null
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "import re\n\ndef extract_between_quotation(s):\n    # Using regular expression to match any string enclosed in single quotes ('')\n    matches = re.findall(r'\\''\\s*(.*?)\\s*'''\n    # Return the extracted values as a list\n    return matches",
+    "cleaned": "import re\n\ndef extract_between_quotation(s):\n    # Using regular expression to match any string enclosed in single quotes ('')\n    matches = re.findall(r'\\''\\s*(.*?)\\s*'''\n    # Return the extracted values as a list\n    return matches",
+    "ast_valid": false,
+    "execution_result": null
+  },
+  "test_cases": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "execution_details": []
+  },
+  "metrics": {
+    "cyclomatic_complexity": 0.0,
+    "execution_time": null
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def product(k, *nums):\n    result = 1\n    for num in nums:\n        if num[k] > 0:\n            result *= num[k]\n        else:\n            result *= -num[k]\n    return result",
+    "cleaned": "def product(k, *nums):\n    result = 1\n    for num in nums:\n        if num[k] > 0:\n            result *= num[k]\n        else:\n            result *= -num[k]\n    return result",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert product([(5, 6, 7), (1, 3, 5), (8, 9, 19)], 2) == 665",
+        "passed": false,
+        "error": "'int' object is not subscriptable"
+      },
+      {
+        "test_case": "assert product([(6, 7, 8), (2, 4, 6), (9, 10, 20)], 1) == 280",
+        "passed": false,
+        "error": "'int' object is not subscriptable"
+      },
+      {
+        "test_case": "assert product([(7, 8, 9), (3, 5, 7), (10, 11, 21)], 0) == 210",
+        "passed": false,
+        "error": "'int' object is not subscriptable"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 3.0,
+    "execution_time": 0.0007619857788085938
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def product(k, *nums):\n    result = 1\n    for num in nums:\n        if num[k] > 0:\n            result *= num[k]\n        else:\n            result *= -num[k]\n    return result",
+    "cleaned": "def product(k, *nums):\n    result = 1\n    for num in nums:\n        if num[k] > 0:\n            result *= num[k]\n        else:\n            result *= -num[k]\n    return result",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert product([(5, 6, 7), (1, 3, 5), (8, 9, 19)], 2) == 665",
+        "passed": false,
+        "error": "'int' object is not subscriptable"
+      },
+      {
+        "test_case": "assert product([(6, 7, 8), (2, 4, 6), (9, 10, 20)], 1) == 280",
+        "passed": false,
+        "error": "'int' object is not subscriptable"
+      },
+      {
+        "test_case": "assert product([(7, 8, 9), (3, 5, 7), (10, 11, 21)], 0) == 210",
+        "passed": false,
+        "error": "'int' object is not subscriptable"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 3.0,
+    "execution_time": 0.0007245540618896484
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def remove_chars(input_string, remove_string):\n    # Initialize an empty list to store the result \n    result = [] \n    # Iterate through each character in the input_string \n    for char in input_string:\n        # If character is not in remove_string, append it to the result \n        if char not in remove_string:\n            result.append(char)\n    # Join the characters in the result list into a string and return it \n    return ''.join(result)",
+    "cleaned": "def remove_chars(input_string, remove_string):\n    # Initialize an empty list to store the result \n    result = [] \n    # Iterate through each character in the input_string \n    for char in input_string:\n        # If character is not in remove_string, append it to the result \n        if char not in remove_string:\n            result.append(char)\n    # Join the characters in the result list into a string and return it \n    return ''.join(result)",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "execution_details": [
+      {
+        "test_case": "assert remove_chars(\"probasscurve\", \"pros\") == 'bacuve'",
+        "passed": true,
+        "error": null
+      },
+      {
+        "test_case": "assert remove_chars(\"digitalindia\", \"talent\") == 'digiidi'",
+        "passed": true,
+        "error": null
+      },
+      {
+        "test_case": "assert remove_chars(\"exoticmiles\", \"toxic\") == 'emles' ",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 3.0,
+    "execution_time": 0.0009357929229736328
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def remove_chars(input_string, remove_string):\n    # Initialize an empty list to store the result \n    result = [] \n    # Iterate through each character in the input_string \n    for char in input_string:\n        # If character is not in remove_string, append it to the result \n        if char not in remove_string:\n            result.append(char)\n    # Join the characters in the result list into a string and return it \n    return ''.join(result)",
+    "cleaned": "def remove_chars(input_string, remove_string):\n    # Initialize an empty list to store the result \n    result = [] \n    # Iterate through each character in the input_string \n    for char in input_string:\n        # If character is not in remove_string, append it to the result \n        if char not in remove_string:\n            result.append(char)\n    # Join the characters in the result list into a string and return it \n    return ''.join(result)",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "execution_details": [
+      {
+        "test_case": "assert remove_chars(\"probasscurve\", \"pros\") == 'bacuve'",
+        "passed": true,
+        "error": null
+      },
+      {
+        "test_case": "assert remove_chars(\"digitalindia\", \"talent\") == 'digiidi'",
+        "passed": true,
+        "error": null
+      },
+      {
+        "test_case": "assert remove_chars(\"exoticmiles\", \"toxic\") == 'emles' ",
+        "passed": true,
+        "error": null
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 3.0,
+    "execution_time": 0.0008540153503417969
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def count_odd_days(year):\n    # Dictionary to store the number of odd days for each month\n    num_odd_days = {\n        1: 1,  # January\n        2: 2,  # February\n        3: 3,  # March\n        4: 30,  # April\n        5: 31,  # May\n        6: 30,  # June\n        7: 31,  # July\n        8: 31,  # August\n        9: 30,  # September\n        10: 31,  # October\n        11: 30,  # November\n        12: 31  # December\n    }\n    \n    # Check if the year is divisible by 4\n    if year % 400 == 0:\n        # If divisible by 400, it is a leap year\n        num_odd_days[12] -= 1\n    elif year % 4 == 0:\n        # If divisible by 4, it is a leap year\n        num_odd_days[11] -= 1\n    elif year % 100 != 0:\n        # Otherwise, it is not a leap year\n        num_odd_days[1] -= 1\n    \n    # Count odd days in all months\n    odd_count = sum(num_odd_days.values())\n    \n    return odd_count\n\n# Example usage\nyear = 2024\nprint(count_odd_days(year))  # Output: 64",
+    "cleaned": "def count_odd_days(year):\n    # Dictionary to store the number of odd days for each month\n    num_odd_days = {\n        1: 1,  # January\n        2: 2,  # February\n        3: 3,  # March\n        4: 30,  # April\n        5: 31,  # May\n        6: 30,  # June\n        7: 31,  # July\n        8: 31,  # August\n        9: 30,  # September\n        10: 31,  # October\n        11: 30,  # November\n        12: 31  # December\n    }\n    \n    # Check if the year is divisible by 4\n    if year % 400 == 0:\n        # If divisible by 400, it is a leap year\n        num_odd_days[12] -= 1\n    elif year % 4 == 0:\n        # If divisible by 4, it is a leap year\n        num_odd_days[11] -= 1\n    elif year % 100 != 0:\n        # Otherwise, it is not a leap year\n        num_odd_days[1] -= 1\n    \n    # Count odd days in all months\n    odd_count = sum(num_odd_days.values())\n    \n    return odd_count\n\n# Example usage\nyear = 2024\nprint(count_odd_days(year))  # Output: 64",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert count_odd_days(100) == 5",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert count_odd_days(50) ==6",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert count_odd_days(75) == 2",
+        "passed": false,
+        "error": "Assertion failed"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 4.0,
+    "execution_time": 0.0008494853973388672
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def count_odd_days(year):\n    # Dictionary to store the number of odd days for each month\n    num_odd_days = {\n        1: 1,  # January\n        2: 2,  # February\n        3: 3,  # March\n        4: 30,  # April\n        5: 31,  # May\n        6: 30,  # June\n        7: 31,  # July\n        8: 31,  # August\n        9: 30,  # September\n        10: 31,  # October\n        11: 30,  # November\n        12: 31  # December\n    }\n    \n    # Check if the year is divisible by 4\n    if year % 400 == 0:\n        # If divisible by 400, it is a leap year\n        num_odd_days[12] -= 1\n    elif year % 4 == 0:\n        # If divisible by 4, it is a leap year\n        num_odd_days[11] -= 1\n    elif year % 100 != 0:\n        # Otherwise, it is not a leap year\n        num_odd_days[1] -= 1\n    \n    # Count odd days in all months\n    odd_count = sum(num_odd_days.values())\n    \n    return odd_count\n\n# Example usage\nyear = 2024\nprint(count_odd_days(year))  # Output: 64",
+    "cleaned": "def count_odd_days(year):\n    # Dictionary to store the number of odd days for each month\n    num_odd_days = {\n        1: 1,  # January\n        2: 2,  # February\n        3: 3,  # March\n        4: 30,  # April\n        5: 31,  # May\n        6: 30,  # June\n        7: 31,  # July\n        8: 31,  # August\n        9: 30,  # September\n        10: 31,  # October\n        11: 30,  # November\n        12: 31  # December\n    }\n    \n    # Check if the year is divisible by 4\n    if year % 400 == 0:\n        # If divisible by 400, it is a leap year\n        num_odd_days[12] -= 1\n    elif year % 4 == 0:\n        # If divisible by 4, it is a leap year\n        num_odd_days[11] -= 1\n    elif year % 100 != 0:\n        # Otherwise, it is not a leap year\n        num_odd_days[1] -= 1\n    \n    # Count odd days in all months\n    odd_count = sum(num_odd_days.values())\n    \n    return odd_count\n\n# Example usage\nyear = 2024\nprint(count_odd_days(year))  # Output: 64",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert count_odd_days(100) == 5",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert count_odd_days(50) ==6",
+        "passed": false,
+        "error": "Assertion failed"
+      },
+      {
+        "test_case": "assert count_odd_days(75) == 2",
+        "passed": false,
+        "error": "Assertion failed"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 4.0,
+    "execution_time": 0.0007078647613525391
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def sum_of_absolute_diff(arr):\n    # Check if the array has more than one element\n    if len(arr) < 2:\n        return 0\n    # Initialize the sum\n    sum = 0\n    # Iterate through each element in the array\n    for i in range(len(arr)):\n        for j in range(i+1,len(arr)):\n            sum += abs(arr[i] - arr[j])\n    return sum",
+    "cleaned": "def sum_of_absolute_diff(arr):\n    # Check if the array has more than one element\n    if len(arr) < 2:\n        return 0\n    # Initialize the sum\n    sum = 0\n    # Iterate through each element in the array\n    for i in range(len(arr)):\n        for j in range(i+1,len(arr)):\n            sum += abs(arr[i] - arr[j])\n    return sum",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert sum_of_absolute_diff([1,8,9,15,16],5) == 74",
+        "passed": false,
+        "error": "sum_of_absolute_diff() takes 1 positional argument but 2 were given"
+      },
+      {
+        "test_case": "assert sum_of_absolute_diff([1,2,3,4],4) == 10",
+        "passed": false,
+        "error": "sum_of_absolute_diff() takes 1 positional argument but 2 were given"
+      },
+      {
+        "test_case": "assert sum_of_absolute_diff([1,2,3,4,5,7,9,11,14],9) == 188",
+        "passed": false,
+        "error": "sum_of_absolute_diff() takes 1 positional argument but 2 were given"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 4.0,
+    "execution_time": 0.0009953975677490234
+  }
+}
+
+{
+  "generated_code": {
+    "raw": "def sum_of_absolute_diff(arr):\n    # Check if the array has more than one element\n    if len(arr) < 2:\n        return 0\n    # Initialize the sum\n    sum = 0\n    # Iterate through each element in the array\n    for i in range(len(arr)):\n        for j in range(i+1,len(arr)):\n            sum += abs(arr[i] - arr[j])\n    return sum",
+    "cleaned": "def sum_of_absolute_diff(arr):\n    # Check if the array has more than one element\n    if len(arr) < 2:\n        return 0\n    # Initialize the sum\n    sum = 0\n    # Iterate through each element in the array\n    for i in range(len(arr)):\n        for j in range(i+1,len(arr)):\n            sum += abs(arr[i] - arr[j])\n    return sum",
+    "ast_valid": true,
+    "execution_result": "success"
+  },
+  "test_cases": {
+    "total": 3,
+    "passed": 0,
+    "failed": 3,
+    "execution_details": [
+      {
+        "test_case": "assert sum_of_absolute_diff([1,8,9,15,16],5) == 74",
+        "passed": false,
+        "error": "sum_of_absolute_diff() takes 1 positional argument but 2 were given"
+      },
+      {
+        "test_case": "assert sum_of_absolute_diff([1,2,3,4],4) == 10",
+        "passed": false,
+        "error": "sum_of_absolute_diff() takes 1 positional argument but 2 were given"
+      },
+      {
+        "test_case": "assert sum_of_absolute_diff([1,2,3,4,5,7,9,11,14],9) == 188",
+        "passed": false,
+        "error": "sum_of_absolute_diff() takes 1 positional argument but 2 were given"
+      }
+    ]
+  },
+  "metrics": {
+    "cyclomatic_complexity": 4.0,
+    "execution_time": 0.0009260177612304688
+  }
+}
+

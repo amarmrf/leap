@@ -1,0 +1,107 @@
+2024-12-05 19:01:56 [INFO] __main__: Weights & Biases initialized successfully.
+2024-12-05 19:01:56 [INFO] __main__: Trainer initialized successfully.
+2024-12-05 19:01:56 [INFO] __main__: Starting training process.
+2024-12-05 19:01:56 [INFO] __main__: Starting Stage I Training - Epoch 1
+Stage I Training:   0%|                                                                                                         | 0/1 [00:00<?, ?it/s]/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/transformers/pytorch_utils.py:325: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  test_elements = torch.tensor(test_elements)
+2024-12-05 19:03:22 [INFO] __main__:
+=== Sample 1 First Attempt ===
+2024-12-05 19:03:22 [INFO] __main__: Correct Answer:
+R = 3
+C = 3
+def min_cost(cost, m, n):
+	tc = [[0 for x in range(C)] for x in range(R)]
+	tc[0][0] = cost[0][0]
+	for i in range(1, m+1):
+		tc[i][0] = tc[i-1][0] + cost[i][0]
+	for j in range(1, n+1):
+		tc[0][j] = tc[0][j-1] + cost[0][j]
+	for i in range(1, m+1):
+		for j in range(1, n+1):
+			tc[i][j] = min(tc[i-1][j-1], tc[i-1][j], tc[i][j-1]) + cost[i][j]
+	return tc[m][n]
+Exception ignored in: <function _MultiProcessingDataLoaderIter.__del__ at 0x151b31da0>
+Traceback (most recent call last):
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1479, in __del__
+    self._shutdown_workers()
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1443, in _shutdown_workers
+    w.join(timeout=_utils.MP_STATUS_CHECK_INTERVAL)
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/multiprocessing/process.py", line 149, in join
+    res = self._popen.wait(timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/multiprocessing/popen_fork.py", line 40, in wait
+    if not wait([self.sentinel], timeout):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/multiprocessing/connection.py", line 1135, in wait
+    ready = selector.select(timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/selectors.py", line 415, in select
+    fd_event_list = self._selector.poll(timeout)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt:
+Stage I Training:   0%|                                                                                                         | 0/1 [05:24<?, ?it/s]
+Traceback (most recent call last):
+  File "/Users/amarmaruf/dev/dsse-group-project/score_mps_run.py", line 1622, in <module>
+    main()
+  File "/Users/amarmaruf/dev/dsse-group-project/score_mps_run.py", line 1570, in main
+    trainer.train()
+  File "/Users/amarmaruf/dev/dsse-group-project/score_mps_run.py", line 957, in train
+    self.stage_one()
+  File "/Users/amarmaruf/dev/dsse-group-project/score_mps_run.py", line 1077, in stage_one
+    second_ids = self.model.generate_text(second_encodings, max_length=self.config.max_seq_len)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/dev/dsse-group-project/score_mps_run.py", line 451, in generate_text
+    outputs = self.model.generate(
+              ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/peft/peft_model.py", line 1704, in generate
+    outputs = self.base_model.generate(*args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/transformers/generation/utils.py", line 2215, in generate
+    result = self._sample(
+             ^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/transformers/generation/utils.py", line 3206, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/transformers/models/qwen2/modeling_qwen2.py", line 1164, in forward
+    outputs = self.model(
+              ^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/transformers/models/qwen2/modeling_qwen2.py", line 895, in forward
+    layer_outputs = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/transformers/models/qwen2/modeling_qwen2.py", line 623, in forward
+    hidden_states, self_attn_weights, present_key_value = self.self_attn(
+                                                          ^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/transformers/models/qwen2/modeling_qwen2.py", line 523, in forward
+    key_states, value_states = past_key_value.update(key_states, value_states, self.layer_idx, cache_kwargs)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/amarmaruf/miniconda3/envs/py312/lib/python3.12/site-packages/transformers/cache_utils.py", line 447, in update
+    self.key_cache[layer_idx] = torch.cat([self.key_cache[layer_idx], key_states], dim=-2)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

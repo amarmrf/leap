@@ -1,0 +1,10 @@
+torch
+sentencepiece
+huggingface-hub
+transformers
+matplotlib
+nltk
+rouge
+radon
+wandb
+peft
