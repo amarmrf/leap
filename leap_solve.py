@@ -164,14 +164,28 @@ def format_examples() -> str:
 def format_principles() -> str:
     """Format the set of principles into a string."""
     principles = [
-        "1. Clarity and Precision: Provide clear, concise code without ambiguity.",
-        "2. Relevance: Focus only on the specific programming task.",
-        "3. Non-redundancy: Write efficient code without duplicate logic.",
-        "4. Understanding: Include brief comments for complex logic.",
-        "5. Engagement: Structure code to be readable and maintainable.",
-        "6. Logical Reasoning: Demonstrate clear problem-solving steps.",
-        "7. Appropriate Level: Write professional-grade code.",
-        "8. Continuous Improvement: Learn from test cases and improve solutions."
+        "1. Descriptive and clear naming for functions, variables, and parameters",
+        "2. Self-contained, clear, and maintainable code",
+        "3. Comprehensive documentation (docstrings, comments, usage instructions)",
+        "4. Handle empty or invalid inputs",
+        "5. Account for non-existent patterns/characters",
+        "6. Manage edge cases (e.g., negative numbers, malformed input)",
+        "7. Return sensible defaults when conditions aren't met",
+        "8. Optimize for time complexity (typically aiming for O(n) where possible)",
+        "9. Use efficient data structures and operations",
+        "10. Consider caching or reusing previous states when applicable",
+        "11. Evaluate performance impact on large inputs",
+        "12. Clear return types",
+        "13. Return new modified values instead of mutating originals",
+        "14. Preserve original data when appropriate",
+        "15. Cover diverse test scenarios",
+        "16. Include edge cases in test suite",
+        "17. Verify logical correctness",
+        "18. Ensure consistent behavior across different inputs",
+        "19. Use appropriate control structures (e.g., break statements in loops)",
+        "20. Handle string operations carefully (slicing, regex)",
+        "21. Include necessary imports",
+        "22. Optimize patterns and algorithms for specific use cases"
     ]
     return "\n".join(principles)
 
