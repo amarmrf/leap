@@ -44,11 +44,14 @@ def export_second_attempts(parsed_data, output_file):
                 f.write('\n\n---\n\n')  # Separator between entries
 
 def main():
+    from datetime import datetime
     input_file = "outputs-leap/reward_traces_leap.jsonl"
-    output_file = "second_attempts.txt"
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_file = f"second_attempts_{timestamp}.txt"
     
     parsed_data = parse_json_file(input_file)
     export_second_attempts(parsed_data, output_file)
+    
     
     # Print summary
     print(f"\nParsing Summary:")
