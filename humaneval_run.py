@@ -672,15 +672,9 @@ class Evaluate:
                 # Generate first attempt
                 first = [self.model.generate_text(inputs[0])[0]]
                 
-                # Generate second attempt
-                second_inputs, correct, tests = self.prepare_batch(
-                    [batch],
-                    turn=2,
-                    prev_attempts=first
-                )
-                second = [self.model.generate_text(second_inputs[0])[0]]
-
-                # Rest of the processing remains the same but for single sample
+                # Skip second attempt and mark it as false
+                second = [""]  # Empty string for second attempt
+                
                 trace_info = {
                     "sample_id": total_samples + 1,
                     "task_id": batch.get('task_id', None),
@@ -691,20 +685,15 @@ class Evaluate:
                     "metrics": {},
                     "execution_status": {
                         "first_attempt": False,
-                        "second_attempt": False
+                        "second_attempt": False  # Always false since we're skipping it
                     }
                 }
 
-                # logger.info(f"\nProblem number: {i+1}")
-                #logger.info(batch.get('problem', ''))
                 logger.info("\nTest Cases:")
                 logger.info(tests[0] if tests else "No test cases")
 
                 # Process first attempt
                 logger.info("\n=== First Attempt ===")
-                #logger.info("Generated Code:")
-                # logger.info(first[0])
-
                 test_cases = tests[0].split('\n') if tests else []
                 first_code = self._clean_code_response(first[0])
                 
@@ -713,10 +702,9 @@ class Evaluate:
                 expected_func_name = test_case.split('(')[0].replace('assert ', '')
                 
                 if actual_func_name and actual_func_name != expected_func_name:
-                    # Normalize test cases to use actual function name
                     test_cases = self.normalize_test_cases(test_cases, actual_func_name, expected_func_name)
                     logger.info(f"Function name mismatch. Expected: {expected_func_name}, Got: {actual_func_name}")
-              
+            
                 all_tests_passed = True
                 exec_globals = {}
 
@@ -747,57 +735,18 @@ class Evaluate:
                     logger.info("× Code execution 1 failed")
                     trace_info["execution_status"]["first_attempt"] = False
 
-                # Process second attempt
-                logger.info("\n=== Second Attempt ===")
-                #logger.info("Generated Code:")
-                # logger.info(second[0])  
-                    
-                # Similarly for second attempt
-                second_code = self._clean_code_response(second[0])
-                all_tests_passed = True
-                exec_globals = {}
-                
-                try:
-                    # First execute the solution code
-                    exec(second_code, exec_globals)
-                    logger.info("✓ Code execution successful")
-                    
-                    # Then try all test cases
-                    passed_tests = 0
-                    for j, test in enumerate(test_cases, 1):
-                        if test.strip():
-                            try:
-                                exec(test, exec_globals)
-                                passed_tests += 1
-                                logger.info(f"Test {j}: ✓ {test}")
-                            except AssertionError:
-                                all_tests_passed = False
-                                logger.info(f"Test {j}: × Failed assertion: {test}")
-                            except Exception as e:
-                                all_tests_passed = False
-                                logger.info(f"Test {j}: × Failed with error: {str(e)}")
-                                
-                    trace_info["execution_status"]["second_attempt"] = all_tests_passed
-                    total_correct_t2 += 1 if all_tests_passed else 0
-                    
-                except Exception:
-                    logger.info("× Code execution 2 failed")
-                    trace_info["execution_status"]["second_attempt"] = False
-
                 # Add metrics
                 try:
-                    edit_distance = self.compute_edit_distance_ratio(first[0], second[0])
+                    edit_distance = 0  # Set to 0 since we're not doing second attempt
                     logger.info(f"\nEdit distance ratio: {edit_distance:.4f}")
                     trace_info["metrics"]["edit_distance"] = edit_distance
                     
                     if self.config.compute_cyclomatic_complexity:
                         first_complexity = self.compute_cyclomatic_complexity(first[0])
-                        second_complexity = self.compute_cyclomatic_complexity(second[0])
                         logger.info(f"First attempt complexity: {first_complexity:.2f}")
-                        logger.info(f"Second attempt complexity: {second_complexity:.2f}")
                         trace_info["metrics"].update({
                             "cyclomatic_first": first_complexity,
-                            "cyclomatic_second": second_complexity
+                            "cyclomatic_second": 0  # Set to 0 since we're not doing second attempt
                         })
                 except Exception as e:
                     logger.error(f"Error computing metrics: {e}")
