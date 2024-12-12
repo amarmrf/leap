@@ -45,8 +45,8 @@ def set_seed(seed: int) -> None:
         torch.manual_seed(seed)
         np.random.seed(seed)
         random.seed(seed)
-        if torch.cuda.is_available():
-            torch.cuda.manual_seed_all(seed)
+        if torch.backends.mps.is_available():
+            torch.mps.manual_seed(seed)
         logger.info(f"Seed set to {seed}.")
     except Exception as e:
         logger.error(f"Error setting seed: {e}")
@@ -59,10 +59,10 @@ class Config:
     batch_size: int = 1
     max_seq_len: int = 4096
     max_new_tokens: int = 4096
-    device: torch.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device: torch.device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
     seed: int = 42
     task: str = 'CODE'
-    model_variant: str = 'qwen2.5-coder:1.5b'
+    model_variant: str = 'qwen2.5-coder:0.5b'
     data_path: str = './data'
     output_dir: str = './outputs'
     num_workers: int = 1
@@ -412,7 +412,7 @@ class Evaluate:
         Save trace information to a JSON file with pretty printing.
         """
         try:
-            trace_file = os.path.join(self.config.output_dir, 'reward_traces_humaneval.jsonl')
+            trace_file = os.path.join(self.config.output_dir, 'reward_traces_humaneval.json')
             with open(trace_file, 'a') as f:
                 # Pretty print the JSON with indentation
                 json_str = json.dumps(trace_info, indent=2)
@@ -762,7 +762,7 @@ def main():
     """Main function to parse arguments and run evaluation."""
     parser = argparse.ArgumentParser(description="Code Evaluation System")
     parser.add_argument('--task', type=str, default='CODE', choices=['MATH', 'CODE'], help="Task type: MATH or CODE")
-    parser.add_argument('--model_variant', type=str, default='qwen2.5-coder:1.5b', help="Model variant to use")
+    parser.add_argument('--model_variant', type=str, default='qwen2.5-coder:0.5b', help="Model variant to use")
     parser.add_argument('--data_path', type=str, default='./data', help="Path to the data directory")
     parser.add_argument('--output_dir', type=str, default='./outputs', help="Directory to save outputs")
     parser.add_argument('--no_cyclomatic', action='store_false', dest='compute_cyclomatic_complexity', help="Disable cyclomatic complexity computation")
@@ -783,7 +783,7 @@ def main():
         config.validate()
         set_seed(config.seed)
 
-        val_file = os.path.join(config.data_path, 'HumanEval.json')
+        val_file = os.path.join(config.data_path, 'HumanEval.jsonl')
         val_data = load_json(val_file)
         val_dataset = BaseDataset(val_data, task=config.task)
         val_loader = DataLoader(
