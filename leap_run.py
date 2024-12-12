@@ -158,7 +158,7 @@ def format_examples() -> str:
     return examples_str
 
 
-def get_code_few_shot_cot(problem: str) -> str:
+def get_code_few_cot(problem: str) -> str:
     """Generate the base prompt structure using Ollama's chat format."""
     return [
         {
@@ -172,7 +172,7 @@ def get_code_few_shot_cot(problem: str) -> str:
     ]
 
 
-def get_code_mistake(problem: str) -> str:
+def get_code_zero_cot(problem: str) -> str:
     """Generate the base prompt structure using Ollama's chat format."""
     return [
         {
@@ -254,8 +254,8 @@ class BaseDataset(Dataset):
         if self.task == 'CODE':
             if turn == 1:
                 test_list = item.get('test_list', [])
-                # return get_code_few_shot_cot(item.get('text', item.get('prompt', '')))
-                return get_code_mistake(item.get('text', item.get('prompt', '')))
+                # return get_code_few_cot(item.get('text', item.get('prompt', '')))
+                return get_code_zero_cot(item.get('text', item.get('prompt', '')))
             else:
                 return get_code_evaluation_prompt(item.get('text', item.get('prompt', '')), prev_attempt)
         else:
@@ -633,7 +633,8 @@ class Evaluate:
                 
                 if turn == 1:
                     inputs = [
-                        get_code_mistake(p)
+                        #get_code_few_cot(p)
+                        get_code_zero_cot(p)
                         for p in problems
                     ]
                 else:

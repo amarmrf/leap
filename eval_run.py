@@ -45,8 +45,8 @@ def set_seed(seed: int) -> None:
         torch.manual_seed(seed)
         np.random.seed(seed)
         random.seed(seed)
-        if torch.backends.mps.is_available(): 
-            torch.mps.manual_seed(seed) 
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed_all(seed)
         logger.info(f"Seed set to {seed}.")
     except Exception as e:
         logger.error(f"Error setting seed: {e}")
@@ -59,7 +59,7 @@ class Config:
     batch_size: int = 1
     max_seq_len: int = 4096
     max_new_tokens: int = 4096
-    device: torch.device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')  
+    device: torch.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     seed: int = 42
     task: str = 'CODE'
     model_variant: str = 'qwen2.5-coder:1.5b'
@@ -88,54 +88,61 @@ class Config:
                 raise
 
 CODING_EXAMPLES = [
-        {
-            "problem": "Write a function to find the minimum cost path to reach (m, n) from (0, 0) for the given cost matrix cost[][] and a position (m, n) in cost[][].",
-            "tests": [
-                "assert min_cost([[1, 2, 3], [4, 8, 2], [1, 5, 3]], 2, 2) == 8",
-                "assert min_cost([[2, 3, 4], [5, 9, 3], [2, 6, 4]], 2, 2) == 12", 
-                "assert min_cost([[3, 4, 5], [6, 10, 4], [3, 7, 5]], 2, 2) == 16"
-            ],
-            "solution": """R = 3
-C = 3
-def min_cost(cost, m, n): 
-    tc = [[0 for x in range(C)] for x in range(R)] 
-    tc[0][0] = cost[0][0] 
-    for i in range(1, m+1): 
-        tc[i][0] = tc[i-1][0] + cost[i][0] 
-    for j in range(1, n+1): 
-        tc[0][j] = tc[0][j-1] + cost[0][j] 
-    for i in range(1, m+1): 
-        for j in range(1, n+1): 
-            tc[i][j] = min(tc[i-1][j-1], tc[i-1][j], tc[i][j-1]) + cost[i][j] 
-    return tc[m][n]"""
-        },
-        {
-            "problem": "Write a function to find the similar elements from the given two tuple lists.",
-            "tests": [
-                "assert similar_elements((3, 4, 5, 6),(5, 7, 4, 10)) == (4, 5)",
-                "assert similar_elements((1, 2, 3, 4),(5, 4, 3, 7)) == (3, 4)",
-                "assert similar_elements((11, 12, 14, 13),(17, 15, 14, 13)) == (13, 14)"
-            ],
-            "solution": """def similar_elements(test_tup1, test_tup2):
-    res = tuple(set(test_tup1) & set(test_tup2))
-    return (res)"""
-        },
-        {
-            "problem": "Write a python function to identify non-prime numbers.",
-            "tests": [
-                "assert is_not_prime(2) == False",
-                "assert is_not_prime(10) == True", 
-                "assert is_not_prime(35) == True"
-            ],
-            "solution": """import math
-def is_not_prime(n):
-    result = False
-    for i in range(2,int(math.sqrt(n)) + 1):
-        if n % i == 0:
-            result = True
-    return result"""
-        }
-    ]
+    {
+        "problem": "Write a python function to remove first and last occurrence of a given character from the string.",
+        "tests": [
+            "assert remove_Occ(\"hello\",\"l\") == \"heo\"",
+            "assert remove_Occ(\"abcda\",\"a\") == \"bcd\"",
+            "assert remove_Occ(\"PHP\",\"P\") == \"H\""
+        ],
+        "solution": """def remove_Occ(s,ch): 
+    for i in range(len(s)): 
+        if (s[i] == ch): 
+            s = s[0 : i] + s[i + 1:] 
+            break
+    for i in range(len(s) - 1,-1,-1):  
+        if (s[i] == ch): 
+            s = s[0 : i] + s[i + 1:] 
+            break
+    return s"""
+    },
+    {
+        "problem": "Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.",
+        "tests": [
+            "assert text_lowercase_underscore(\"aab_cbbbc\")==(True)",
+            "assert text_lowercase_underscore(\"aab_Abbbc\")==(False)",
+            "assert text_lowercase_underscore(\"Aaab_abbbc\")==(False)"
+        ],
+        "solution": """import re
+def text_lowercase_underscore(text):
+        patterns = '^[a-z]+_[a-z]+$'
+        if re.search(patterns,  text):
+                return True
+        else:
+                return False"""
+    },
+    {
+        "problem": "Write a function to check if the given number is woodball or not.",
+        "tests": [
+            "assert is_woodall(383) == True",
+            "assert is_woodall(254) == False",
+            "assert is_woodall(200) == False"
+        ],
+        "solution": """def is_woodall(x): 
+    if (x % 2 == 0): 
+        return False
+    if (x == 1): 
+        return True
+    x = x + 1 
+    p = 0
+    while (x % 2 == 0): 
+        x = x/2
+        p = p + 1
+        if (p == x): 
+            return True
+    return False"""
+    }
+]
 
 
 def format_examples() -> str:
@@ -155,26 +162,26 @@ def format_examples() -> str:
 def get_code_first_turn_prompt(problem: str) -> str:
     """Generate the base prompt structure using Ollama's chat format."""
     return [
-        # {
-        #     "role": "system",
-        #     "content": f"You are an expert Python programmer. Please understand the requirement and think step by step. Here are some examples of problems and their test cases:\n{format_examples()}"
-        # },
+        {
+            "role": "system",
+            "content": f"You are an expert Python programmer. Please understand the requirement and think step by step. Here are some examples of problems and their test cases:\n{format_examples()}"
+        },
         {
             "role": "user",
-            "content": f"You are an expert Python programmer. Please understand the requirement and think step by step. Here are some examples of problems and their test cases:\n{format_examples()} {problem}"
+            "content": f"{problem}"
         }
     ]
 
 def get_code_correction_prompt(problem: str, prev_attempt: str) -> str:
     """Generate the self-correction prompt using proper chat format."""
     return [
-        # {
-        #     "role": "system",
-        #     "content": f"You are an expert Python programmer. Please understand the requirement and think step by step. Here are some examples of problems and their test cases:\n{format_examples()}"
-        # },
+        {
+            "role": "system",
+            "content": f"You are an expert Python programmer. Please understand the requirement and think step by step. Here are some examples of problems and their test cases:\n{format_examples()}"
+        },
         {
             "role": "user",
-            "content": f"You are an expert Python programmer. Please understand the requirement and think step by step. Here are some examples of problems and their test cases:\n{format_examples()} {problem}"
+            "content": f"{problem}"
         },
         {
             "role": "assistant",
