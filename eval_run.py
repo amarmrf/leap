@@ -164,7 +164,13 @@ def get_code_first_turn_prompt(problem: str) -> str:
     return [
         {
             "role": "system",
-            "content": f"You are an expert Python programmer. Please understand the requirement and think step by step. Here are some examples of problems and their test cases:\n{format_examples()}"
+            "content": f"""You are an expert Python programmer. Please understand the requirement and think step by step. Here are some examples of problems and their test cases:\n{format_examples()}"""
+            # Consider these aspects when solving the problem:
+            # 1. Input format and constraints
+            # 2. Required output format
+            # 3. Edge cases to handle
+            # 4. Performance considerations
+            # """
         },
         {
             "role": "user",

@@ -62,7 +62,7 @@ class Config:
     device: torch.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     seed: int = 42
     task: str = 'CODE'
-    model_variant: str = 'qwen2.5-coder:0.5b'
+    model_variant: str = 'qwen2.5-coder:1.5b'
     data_path: str = './data'
     output_dir: str = './outputs-leap'
     num_workers: int = 1
@@ -144,6 +144,7 @@ def text_lowercase_underscore(text):
     }
 ]
 
+
 def format_examples() -> str:
     """Format coding examples into a string."""
     examples_str = ""
@@ -158,26 +159,12 @@ def format_examples() -> str:
     return examples_str
 
 
-def get_code_few_cot(problem: str) -> str:
+def get_code_first_turn_prompt(problem: str) -> str:
     """Generate the base prompt structure using Ollama's chat format."""
     return [
         {
             "role": "system",
-            "content": f"You are an expert Python programmer. Please understand the requirement and think step by step. Here are some examples of problems and their test cases:\n{format_examples()}"
-        },
-        {
-            "role": "user",
-            "content": f"{problem}"
-        }
-    ]
-
-
-def get_code_zero_cot(problem: str) -> str:
-    """Generate the base prompt structure using Ollama's chat format."""
-    return [
-        {
-            "role": "system",
-            "content": f"""You are an expert Python programmer. Please understand the requirement and think step by step."""
+            "content": f"""You are an expert Python programmer. Please understand the requirement and think step by step. Here are some examples of problems and their test cases:\n{format_examples()}"""
             # Consider these aspects when solving the problem:
             # 1. Input format and constraints
             # 2. Required output format
@@ -187,22 +174,20 @@ def get_code_zero_cot(problem: str) -> str:
         },
         {
             "role": "user",
-            "content": f"{problem}"
+            "content": f"\n{problem}"
         }
     ]
-    
-def get_code_evaluation_prompt(problem: str, prev_attempt: str, correct_code: str, test_cases: List[str]) -> str:
-    """Generate the evaluation prompt using proper chat format."""
-    test_cases_str = "\n".join(test_cases)
-    
+
+def get_code_feedback_prompt(problem: str, prev_attempt: str, feedback: str) -> str:
+    """Generate the correction prompt that includes previous feedback."""
     return [
         {
             "role": "system",
-            "content": f"You are an expert Python programmer and code reviewer. Please understand the requirement and think step by step. Here are some examples of problems and their test cases:\n{format_examples()}"
+            "content": f"You are an expert Python programmer. Please understand the requirement and think step by step. Here are some examples of problems and their test cases:\n{format_examples()}"
         },
         {
             "role": "user",
-            "content": f"{problem}"
+            "content": f"\n{problem}"
         },
         {
             "role": "assistant",
@@ -210,23 +195,50 @@ def get_code_evaluation_prompt(problem: str, prev_attempt: str, correct_code: st
         },
         {
             "role": "user",
-            "content": f"""Here are the test cases that need to be satisfied:
-                {test_cases_str}
-
-                And here is the correct solution:
-                {correct_code}
-
-
-                Please conduct a thorough analysis comparing the generated solution with the correct solution. Focus on these things:
-                1. Identify specific errors, bugs, or inefficiencies
-                2. Explain why these issues occurred
-                3. Provide concrete coding principles to avoid similar mistakes
-                4. Suggest best practices for this type of problem
-
-                Provide clear insights and guidelines that can be derived from this analysis to improve future code generation. Focus on general principles rather than just this specific instance."""
+            "content": "Please analyze the code and provide specific feedback about:"
+                      f"\n1. Syntax errors"
+                      f"\n2. Logical errors"
+                      f"\n3. Test case handling"
+                      f"\n4. Code efficiency"
+                      f"\n5. Best practices"
         }
     ]
 
+def get_code_correction_with_feedback_prompt(problem: str, prev_attempt: str, feedback: str) -> str:
+    """Generate the self-correction prompt using proper chat format."""
+    return [
+        {
+            "role": "system",
+            "content": f"You are an expert Python programmer. Please understand the requirement and think step by step. Here are some examples of problems and their test cases:\n{format_examples()}"
+        },
+        {
+            "role": "user",
+            "content": f"\n{problem}"
+        },
+        {
+            "role": "assistant",
+            "content": prev_attempt
+        },
+        {
+            "role": "user",
+            "content": "Please analyze the code and provide specific feedback about:"
+                      f"\n1. Syntax errors"
+                      f"\n2. Logical errors"
+                      f"\n3. Test case handling"
+                      f"\n4. Code efficiency"
+                      f"\n5. Best practices"
+        },
+                {
+            "role": "assistant",
+            "content": feedback
+        },
+        {
+            "role": "user",
+            "content": "Given the feedback on your initial solution, please revise your answer to correct any errors or fill in any missing steps. "
+                        "Ensure that the revised answer is accurate and follows a clear step-by-step approach to arrive at the final solution. "
+                        "Only output the final correct Python program!"
+        },
+    ]
 
 class BaseDataset(Dataset):
     """
@@ -239,32 +251,50 @@ class BaseDataset(Dataset):
 
     def __len__(self) -> int:
         return len(self.data)
-    def prepare_prompt(self, item: Dict[str, Any], turn: int = 1, prev_attempt: Optional[str] = None) -> str:
+    def prepare_prompt(self, item: Dict[str, Any], turn: int = 1, prev_attempt: Optional[str] = None, feedback: Optional[str] = None) -> str:
         """
         Prepare prompt based on task and turn number.
         
         Args:
             item: Data item containing problem/prompt
-            turn: Turn number (1 or 2)
-            prev_attempt: Previous attempt for turn 2
+            turn: Turn number (1 for first attempt, 2 for feedback, 3 for correction)
+            prev_attempt: Previous attempt for turns 2 and 3
+            feedback: Feedback from turn 2 for turn 3
             
         Returns:
             Formatted prompt string
         """
         if self.task == 'CODE':
             if turn == 1:
-                test_list = item.get('test_list', [])
-                # return get_code_few_cot(item.get('text', item.get('prompt', '')))
-                return get_code_zero_cot(item.get('text', item.get('prompt', '')))
-            else:
-                return get_code_evaluation_prompt(item.get('text', item.get('prompt', '')), prev_attempt)
+                return get_code_first_turn_prompt(item.get('text', item.get('prompt', '')))
+            elif turn == 2:
+                return get_code_feedback_prompt(
+                    item.get('text', item.get('prompt', '')), 
+                    prev_attempt,
+                    ""  # Empty string for initial feedback request
+                )
+            else:  # turn 3
+                return get_code_correction_with_feedback_prompt(
+                    item.get('text', item.get('prompt', '')),
+                    prev_attempt,
+                    feedback
+                )
         else:
             raise NotImplementedError(f"Task {self.task} is not implemented")
 
     def __getitem__(self, idx: int) -> Dict[str, Any]:
+        """
+        Get an item from the dataset.
+        
+        Args:
+            idx: Index of the item to get
+            
+        Returns:
+            Dict containing the item data and formatted prompt
+        """
         try:
             item = self.data[idx]
-            # Format prompt for first turn
+            # Format prompt for first turn by default
             item['formatted_prompt'] = self.prepare_prompt(item)
             return item
         except IndexError as e:
@@ -332,7 +362,7 @@ class AdvancedModel(nn.Module):
             
             # Add default generation parameters
             self.default_params = {
-                "temperature": 0.7,
+                "temperature": 0.0,
                 "max_tokens": 4096,
                 "top_p": 0.95,
             }
@@ -420,7 +450,7 @@ class Evaluate:
         self.reward_history: List[float] = []
         self.edit_distance_ratios: List[float] = []
     
-        self.checkpoint_file = os.path.join(self.config.output_dir, 'checkpoint_leap.json')
+        self.checkpoint_file = os.path.join(self.config.output_dir, 'checkpoint.json')
         self.last_completed_sample = self._load_checkpoint()
 
     def _load_checkpoint(self) -> int:
@@ -449,7 +479,7 @@ class Evaluate:
         Save trace information to a JSON file with pretty printing.
         """
         try:
-            trace_file = os.path.join(self.config.output_dir, 'reward_traces_leap.jsonl')
+            trace_file = os.path.join(self.config.output_dir, 'reward_traces_refine.jsonl')
             with open(trace_file, 'a') as f:
                 # Pretty print the JSON with indentation
                 json_str = json.dumps(trace_info, indent=2)
@@ -584,15 +614,17 @@ class Evaluate:
         self,
         batch: List[Dict[str, Any]],
         turn: int = 1,
-        prev_attempts: Optional[List[str]] = None
+        prev_attempts: Optional[List[str]] = None,
+        feedback: Optional[str] = None
     ) -> Tuple[List[str], List[str], Optional[List[str]]]:
         """
         Prepare a batch of data for processing.
         
         Args:
             batch: List of data items containing problems/prompts
-            turn: Turn number (1 or 2)
-            prev_attempts: Previous attempts for turn 2
+            turn: Turn number (1 for first attempt, 2 for feedback, 3 for correction)
+            prev_attempts: Previous attempts for turns 2 and 3
+            feedback: Feedback from turn 2 for turn 3
             
         Returns:
             Tuple containing (inputs, correct answers, test cases)
@@ -628,26 +660,30 @@ class Evaluate:
                         test_list = [str(test[0]) if isinstance(test, tuple) else str(test) for test in test_list]
                     test_lists.append(test_list)
                 
-                # Join test cases into single strings
-                tests = ['\n'.join(test_list) for test_list in test_lists]
-                
                 if turn == 1:
                     inputs = [
-                        #get_code_few_cot(p)
-                        get_code_zero_cot(p)
+                        get_code_first_turn_prompt(p) 
                         for p in problems
                     ]
-                else:
+                elif turn == 2:
                     inputs = [
-                        get_code_evaluation_prompt(p, pa, c, t.split('\n')) 
-                        for p, pa, c, t in zip(problems, prev_attempts, correct, tests)
+                        get_code_feedback_prompt(p, pa, "") 
+                        for p, pa in zip(problems, prev_attempts)
+                    ]
+                else:  # turn 3
+                    inputs = [
+                        get_code_correction_with_feedback_prompt(p, pa, f) 
+                        for p, pa, f in zip(problems, prev_attempts, [feedback] if isinstance(feedback, str) else feedback)
                     ]
                     
+                # Join test cases into single strings
+                tests = ['\n'.join(test_list) for test_list in test_lists]
                 return inputs, correct, tests
                     
         except Exception as e:
             logger.error(f"Error preparing batch: {e}")
             raise RuntimeError("Failed to prepare batch.") from e
+
     def extract_function_name(self, code: str) -> str:
         """Extract the main function name from code using AST parsing."""
         try:
@@ -670,7 +706,6 @@ class Evaluate:
         self.model.eval()
         total_correct_t1, total_correct_t2, total_samples = 0.0, 0.0, 0
         delta_i_to_c, delta_c_to_i = 0, 0
-        NUM_ITERATIONS = 15
 
         validation_metrics = {
             "first_attempt": {
@@ -698,152 +733,155 @@ class Evaluate:
                 batch = self.val_loader.dataset[i]
                 logger.info(f"\n--- Processing Sample {i+1} ---")
                 
-                # Run multiple iterations for each problem
-                for iteration in range(NUM_ITERATIONS):
-                    logger.info(f"\n=== Iteration {iteration + 1}/{NUM_ITERATIONS} ===")
-                    
-                    # Prepare single sample as a list
-                    inputs, correct, tests = self.prepare_batch([batch], turn=1)
-                    
-                    # Generate first attempt
-                    first = [self.model.generate_text(inputs[0])[0]]
-                    
-                    # Generate second attempt
-                    second_inputs, correct, tests = self.prepare_batch(
-                        [batch],
-                        turn=2,
-                        prev_attempts=first
-                    )
-                    second = [self.model.generate_text(second_inputs[0])[0]]
-
-                    # Create unique trace info for each iteration
-                    trace_info = {
-                        "sample_id": total_samples + 1,
-                        "iteration": iteration + 1,
-                        "task_id": batch.get('task_id', None),
-                        "problem": batch.get('problem', ''),
-                        "first_attempt": first[0],
-                        "second_attempt": second[0],
-                        "test_cases": tests[0] if tests else "",
-                        "metrics": {},
-                        "execution_status": {
-                            "first_attempt": False,
-                            "second_attempt": False
-                        }
-                    }
-
-                    logger.info("\nTest Cases:")
-                    logger.info(tests[0] if tests else "No test cases")
-
-                    # Process first attempt
-                    logger.info(f"\n=== First Attempt (Iteration {iteration + 1}) ===")
-                    
-                    test_cases = tests[0].split('\n') if tests else []
-                    first_code = self._clean_code_response(first[0])
-                    
-                    actual_func_name = self.extract_function_name(first_code)
-                    test_case = test_cases[0]
-                    expected_func_name = test_case.split('(')[0].replace('assert ', '')
-                    
-                    if actual_func_name and actual_func_name != expected_func_name:
-                        test_cases = self.normalize_test_cases(test_cases, actual_func_name, expected_func_name)
-                        logger.info(f"Function name mismatch. Expected: {expected_func_name}, Got: {actual_func_name}")
+                # First attempt
+                inputs, correct, tests = self.prepare_batch([batch], turn=1)
+                first_attempt_response = self.model.generate_text(inputs[0])[0]  # Changed variable name
                 
-                    all_tests_passed = True
-                    exec_globals = {}
+                # Get feedback
+                feedback_inputs, _, _ = self.prepare_batch(
+                    [batch],
+                    turn=2,
+                    prev_attempts=[first_attempt_response]  # Updated variable name
+                )
+                feedback = self.model.generate_text(feedback_inputs[0])[0]
+                
+                # Generate second attempt with feedback
+                correction_inputs, correct, tests = self.prepare_batch(
+                    [batch],
+                    turn=3,
+                    prev_attempts=[first_attempt_response],  # Updated variable name
+                    feedback=feedback
+                )
+                second_attempt_response = self.model.generate_text(correction_inputs[0])[0]  # Changed variable name
 
-                    try:
-                        # First execute the solution code
-                        exec(first_code, exec_globals)
-                        logger.info("✓ Code execution successful")
+                trace_info = {
+                    "sample_id": total_samples + 1,
+                    "task_id": batch.get('task_id', None),
+                    "problem": batch.get('problem', ''),
+                    "first_attempt": first_attempt_response,  # Updated variable name
+                    "feedback": feedback,
+                    "second_attempt": second_attempt_response,  # Updated variable name
+                    "test_cases": tests[0] if tests else "",
+                    "metrics": {},
+                    "execution_status": {
+                        "first_attempt": False,
+                        "second_attempt": False
+                    }
+                }
 
-                        passed_tests = 0
-                        # Then try all test cases
-                        for j, test in enumerate(test_cases, 1):
-                            if test.strip():
-                                try:
-                                    exec(test, exec_globals)
-                                    passed_tests += 1
-                                    logger.info(f"Test {j}: ✓ {test}")
-                                except AssertionError:
-                                    all_tests_passed = False
-                                    logger.info(f"Test {j}: × Failed assertion: {test}")
-                                except Exception as e:
-                                    all_tests_passed = False
-                                    logger.info(f"Test {j}: × Failed with error: {str(e)}")
+                logger.info("\nTest Cases:")
+                logger.info(tests[0] if tests else "No test cases")
+
+                # Process first attempt
+                logger.info("\n=== First Attempt ===")
+                
+                test_cases = tests[0].split('\n') if tests else []
+                first_code = self._clean_code_response(first_attempt_response)  # Updated variable name
+                
+                actual_func_name = self.extract_function_name(first_code)
+                test_case = test_cases[0]
+                expected_func_name = test_case.split('(')[0].replace('assert ', '')
+                
+                
+                if actual_func_name and actual_func_name != expected_func_name:
+                    # Normalize test cases to use actual function name
+                    test_cases = self.normalize_test_cases(test_cases, actual_func_name, expected_func_name)
+                    logger.info(f"Function name mismatch. Expected: {expected_func_name}, Got: {actual_func_name}")
+              
+                all_tests_passed = True
+                exec_globals = {}
+
+                try:
+                    # First execute the solution code
+                    exec(first_code, exec_globals)
+                    logger.info("✓ Code execution successful")
+
+                    passed_tests = 0
+                    # Then try all test cases
+                    for j, test in enumerate(test_cases, 1):
+                        if test.strip():
+                            try:
+                                exec(test, exec_globals)
+                                passed_tests += 1
+                                logger.info(f"Test {j}: ✓ {test}")
+                            except AssertionError:
+                                all_tests_passed = False
+                                logger.info(f"Test {j}: × Failed assertion: {test}")
+                            except Exception as e:
+                                all_tests_passed = False
+                                logger.info(f"Test {j}: × Failed with error: {str(e)}")
+                
+                    trace_info["execution_status"]["first_attempt"] = all_tests_passed
+                    total_correct_t1 += 1 if all_tests_passed else 0
                     
-                        trace_info["execution_status"]["first_attempt"] = all_tests_passed
-                        total_correct_t1 += 1 if all_tests_passed else 0
-                        
-                    except Exception:
-                        logger.info("× Code execution 1 failed")
-                        trace_info["execution_status"]["first_attempt"] = False
+                except Exception:
+                    logger.info("× Code execution 1 failed")
+                    trace_info["execution_status"]["first_attempt"] = False
 
-                    # Process second attempt
-                    logger.info(f"\n=== Second Attempt (Iteration {iteration + 1}) ===")
-                        
-                    # Similarly for second attempt
-                    second_code = self._clean_code_response(second[0])
-                    all_tests_passed = True
-                    exec_globals = {}
+                # Process second attempt
+                logger.info("\n=== Second Attempt ===")
+                #logger.info("Generated Code:")
+                # logger.info(second[0])  
                     
-                    try:
-                        # First execute the solution code
-                        exec(second_code, exec_globals)
-                        logger.info("✓ Code execution successful")
-                        
-                        # Then try all test cases
-                        passed_tests = 0
-                        for j, test in enumerate(test_cases, 1):
-                            if test.strip():
-                                try:
-                                    exec(test, exec_globals)
-                                    passed_tests += 1
-                                    logger.info(f"Test {j}: ✓ {test}")
-                                except AssertionError:
-                                    all_tests_passed = False
-                                    logger.info(f"Test {j}: × Failed assertion: {test}")
-                                except Exception as e:
-                                    all_tests_passed = False
-                                    logger.info(f"Test {j}: × Failed with error: {str(e)}")
-                                    
-                        trace_info["execution_status"]["second_attempt"] = all_tests_passed
-                        total_correct_t2 += 1 if all_tests_passed else 0
-                        
-                    except Exception:
-                        logger.info("× Code execution 2 failed")
-                        trace_info["execution_status"]["second_attempt"] = False
-
-                    # Add metrics
-                    try:
-                        edit_distance = self.compute_edit_distance_ratio(first[0], second[0])
-                        logger.info(f"\nEdit distance ratio: {edit_distance:.4f}")
-                        trace_info["metrics"]["edit_distance"] = edit_distance
-                        
-                        if self.config.compute_cyclomatic_complexity:
-                            first_complexity = self.compute_cyclomatic_complexity(first[0])
-                            second_complexity = self.compute_cyclomatic_complexity(second[0])
-                            logger.info(f"First attempt complexity: {first_complexity:.2f}")
-                            logger.info(f"Second attempt complexity: {second_complexity:.2f}")
-                            trace_info["metrics"].update({
-                                "cyclomatic_first": first_complexity,
-                                "cyclomatic_second": second_complexity
-                            })
-                    except Exception as e:
-                        logger.error(f"Error computing metrics: {e}")
-                        trace_info["metrics_error"] = str(e)
-
-                    # Save trace for each iteration
-                    self._save_trace(trace_info)
+                # Similarly for second attempt
+                second_code = self._clean_code_response(second_attempt_response)  # Updated from second[0] to second_attempt_response
+                all_tests_passed = True
+                exec_globals = {}
+                
+                try:
+                    # First execute the solution code
+                    exec(second_code, exec_globals)
+                    logger.info("✓ Code execution successful")
                     
-                # Save checkpoint after completing all iterations for a problem
+                    # Then try all test cases
+                    passed_tests = 0
+                    for j, test in enumerate(test_cases, 1):
+                        if test.strip():
+                            try:
+                                exec(test, exec_globals)
+                                passed_tests += 1
+                                logger.info(f"Test {j}: ✓ {test}")
+                            except AssertionError:
+                                all_tests_passed = False
+                                logger.info(f"Test {j}: × Failed assertion: {test}")
+                            except Exception as e:
+                                all_tests_passed = False
+                                logger.info(f"Test {j}: × Failed with error: {str(e)}")
+                                
+                    trace_info["execution_status"]["second_attempt"] = all_tests_passed
+                    total_correct_t2 += 1 if all_tests_passed else 0
+                    
+                except Exception:
+                    logger.info("× Code execution 2 failed")
+                    trace_info["execution_status"]["second_attempt"] = False
+                # Add metrics
+                try:
+                    edit_distance = self.compute_edit_distance_ratio(first_attempt_response, second_attempt_response)  # Updated variable names
+                    logger.info(f"\nEdit distance ratio: {edit_distance:.4f}")
+                    trace_info["metrics"]["edit_distance"] = edit_distance
+                    
+                    if self.config.compute_cyclomatic_complexity:
+                        first_complexity = self.compute_cyclomatic_complexity(first_attempt_response[0])
+                        second_complexity = self.compute_cyclomatic_complexity(second_attempt_response[0])
+                        logger.info(f"First attempt complexity: {first_complexity:.2f}")
+                        logger.info(f"Second attempt complexity: {second_complexity:.2f}")
+                        trace_info["metrics"].update({
+                            "cyclomatic_first": first_complexity,
+                            "cyclomatic_second": second_complexity
+                        })
+                except Exception as e:
+                    logger.error(f"Error computing metrics: {e}")
+                    trace_info["metrics_error"] = str(e)
+
+                # Save trace
+                self._save_trace(trace_info)
                 self._save_checkpoint(i)
                 total_samples += 1
 
             # Log final metrics
             self._log_final_metrics(
                 validation_metrics,
-                total_samples * NUM_ITERATIONS,  # Adjust for total number of iterations
+                total_samples,
                 total_correct_t1,
                 total_correct_t2,
                 delta_i_to_c,
@@ -853,6 +891,8 @@ class Evaluate:
         except Exception as e:
             logger.error(f"Error during evaluate function call: {e}")
             raise
+
+
     def _log_final_metrics(self, metrics: Dict, total_samples: int, 
                         total_correct_t1: float, total_correct_t2: float,
                         delta_i_to_c: int, delta_c_to_i: int) -> None:
@@ -891,7 +931,7 @@ def main():
     """Main function to parse arguments and run evaluation."""
     parser = argparse.ArgumentParser(description="Code Evaluation System")
     parser.add_argument('--task', type=str, default='CODE', choices=['MATH', 'CODE'], help="Task type: MATH or CODE")
-    parser.add_argument('--model_variant', type=str, default='qwen2.5-coder:0.5b', help="Model variant to use")
+    parser.add_argument('--model_variant', type=str, default='qwen2.5-coder:1.5b', help="Model variant to use")
     parser.add_argument('--data_path', type=str, default='./data', help="Path to the data directory")
     parser.add_argument('--output_dir', type=str, default='./outputs-leap', help="Directory to save outputs")
     parser.add_argument('--no_cyclomatic', action='store_false', dest='compute_cyclomatic_complexity', help="Disable cyclomatic complexity computation")
@@ -912,7 +952,7 @@ def main():
         config.validate()
         set_seed(config.seed)
 
-        val_file = os.path.join(config.data_path, 'leap_train.json')
+        val_file = os.path.join(config.data_path, 'sanitized_test_257.json')
         val_data = load_json(val_file)
         val_dataset = BaseDataset(val_data, task=config.task)
         val_loader = DataLoader(

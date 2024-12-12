@@ -10,7 +10,7 @@ def calculate_accuracy():
     degraded_tasks = []  # List to store degraded task IDs
     
     # Read the JSONL file line by line
-    with open('outputs/reward_traces.jsonl', 'r') as file:
+    with open('outputs-leap/reward_traces_leap.jsonl', 'r') as file:
         content = file.read()
         # Split the content by closing braces followed by opening braces
         entries = content.split('}\n\n{')
