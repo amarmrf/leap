@@ -45,10 +45,10 @@ def set_seed(seed: int) -> None:
         torch.manual_seed(seed)
         np.random.seed(seed)
         random.seed(seed)
-        # if torch.cuda.is_available():
-        #     torch.cuda.manual_seed_all(seed)
-        if torch.backends.mps.is_available():
-            torch.mps.manual_seed(seed)
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed_all(seed)
+        # if torch.backends.mps.is_available():
+        #     torch.mps.manual_seed(seed)
         logger.info(f"Seed set to {seed}.")
     except Exception as e:
         logger.error(f"Error setting seed: {e}")
@@ -61,7 +61,8 @@ class Config:
     batch_size: int = 1
     max_seq_len: int = 4096
     max_new_tokens: int = 4096
-    device: torch.device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
+    device: torch.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    #device: torch.device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
     seed: int = 42
     task: str = 'CODE'
     model_variant: str = 'qwen2.5-coder:1.5b'
@@ -608,10 +609,9 @@ class Evaluate:
                 # Convert test code to executable format
                 test_lists = []
                 for item in batch:
-                    # For HumanEval, we need to construct test cases from the test field
+                    # Extract assertions from test field
                     test_code = item.get('test', '')
                     if test_code:
-                        # Extract the assertions from the test code
                         test_lines = []
                         for line in test_code.splitlines():
                             if line.strip().startswith('assert'):
@@ -627,18 +627,22 @@ class Evaluate:
                     ]
                 else:
                     inputs = [
-                        get_code_evaluation_prompt(p, pa) 
-                        for p, pa in zip(problems, prev_attempts)
+                        get_code_evaluation_prompt(
+                            problem=p,
+                            prev_attempt=pa,
+                            correct_code=c,
+                            test_cases=t
+                        ) 
+                        for p, pa, c, t in zip(problems, prev_attempts, correct, test_lists)
                     ]
                     
-                # Join test cases into single strings
-                tests = ['\n'.join(test_list) for test_list in test_lists]
-                return inputs, correct, tests
-                
+                return inputs, correct, test_lists
+                    
         except Exception as e:
             logger.error(f"Error preparing batch: {e}")
             raise RuntimeError("Failed to prepare batch.") from e
-    
+        
+        
     def extract_function_name(self, code: str) -> str:
         """Extract the main function name from code using AST parsing."""
         try:
@@ -703,7 +707,13 @@ class Evaluate:
                     first = [self.model.generate_text(inputs[0])[0]]
                     
                     # Skip second attempt and mark it as false
-                    second = [""]
+                    second_inputs, correct, tests = self.prepare_batch(
+                        [batch],
+                        turn=2,
+                        prev_attempts=first
+                    )
+
+                    second = [self.model.generate_text(second_inputs[0])[0]]
                     
                     # Create unique trace info for each iteration
                     trace_info = {
