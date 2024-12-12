@@ -64,7 +64,7 @@ class Config:
     device: torch.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     seed: int = 42
     task: str = 'CODE'
-    model_variant: str = 'qwen2.5-coder:0.5b'
+    model_variant: str = 'qwen2.5-coder:1.5b'
     data_path: str = './data'
     output_dir: str = './outputs-leap'
     num_workers: int = 1
@@ -160,6 +160,20 @@ def format_examples() -> str:
         examples_str += "```\n"
     return examples_str
 
+
+def format_guidelines() -> str:
+    """Format the set of guidelines into a string."""
+    guidelines = [
+        "1. Ensure clarity and precision: Responses should be clear and concise, avoiding any ambiguity or unnecessary complexity",
+        "2. Maintain relevance: Focus directly on solving the core task requirements while avoiding any unrelated or tangential information",
+        "3. Prioritize uniqueness: Each solution should provide unique value and insights rather than repeating common patterns",
+        "4. Emphasize logical analysis: Solutions should follow clear logical steps and methodical problem decomposition",
+        "5. Validate underlying assumptions: Carefully check any implicit assumptions made during problem-solving against the explicit requirements",
+        "6. Apply consistent methodology: Use a systematic approach for handling similar classes of problems",
+        "7. Foster improvement: Continuously analyze past solutions to identify areas for enhanced accuracy and efficiency",
+        "8. Preserve critical details: While maintaining conciseness, ensure no important problem-specific information is lost"
+    ]
+    return "\n".join(guidelines)
 
 def format_principles() -> str:
     """Format the set of principles into a string."""
@@ -890,7 +904,7 @@ def main():
     """Main function to parse arguments and run evaluation."""
     parser = argparse.ArgumentParser(description="Code Evaluation System")
     parser.add_argument('--task', type=str, default='CODE', choices=['MATH', 'CODE'], help="Task type: MATH or CODE")
-    parser.add_argument('--model_variant', type=str, default='qwen2.5-coder:0.5b', help="Model variant to use")
+    parser.add_argument('--model_variant', type=str, default='qwen2.5-coder:1.5b', help="Model variant to use")
     parser.add_argument('--data_path', type=str, default='./data', help="Path to the data directory")
     parser.add_argument('--output_dir', type=str, default='./outputs-leap', help="Directory to save outputs")
     parser.add_argument('--no_cyclomatic', action='store_false', dest='compute_cyclomatic_complexity', help="Disable cyclomatic complexity computation")
