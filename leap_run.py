@@ -216,14 +216,7 @@ def get_code_evaluation_prompt(problem: str, prev_attempt: str, correct_code: st
                 And here is the correct solution:
                 {correct_code}
 
-
-                Please conduct a thorough analysis comparing the generated solution with the correct solution. Focus on these things:
-                1. Identify specific errors, bugs, or inefficiencies
-                2. Explain why these issues occurred
-                3. Provide concrete coding principles to avoid similar mistakes
-                4. Suggest best practices for this type of problem
-
-                Provide clear insights and guidelines that can be derived from this analysis to improve future code generation. Focus on general principles rather than just this specific instance."""
+                Conduct a thorough analysis comparing the generated solution with the correct solution.  Also observe how the generated solution failed the test cases. Identify any discrepancies, misunderstandings, or errors. Provide clear insights, principles, or guidelines that can be derived from this analysis to improve future code generation. We are not focused on this one data point, but rather on the general principle."""
         }
     ]
 
@@ -670,7 +663,7 @@ class Evaluate:
         self.model.eval()
         total_correct_t1, total_correct_t2, total_samples = 0.0, 0.0, 0
         delta_i_to_c, delta_c_to_i = 0, 0
-        NUM_ITERATIONS = 15
+        NUM_ITERATIONS = 7
 
         validation_metrics = {
             "first_attempt": {
@@ -834,7 +827,8 @@ class Evaluate:
                         trace_info["metrics_error"] = str(e)
 
                     # Save trace for each iteration
-                    self._save_trace(trace_info)
+                    if not trace_info["execution_status"]["first_attempt"] or not trace_info["execution_status"]["second_attempt"]:
+                        self._save_trace(trace_info)
                     
                 # Save checkpoint after completing all iterations for a problem
                 self._save_checkpoint(i)

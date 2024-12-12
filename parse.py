@@ -36,16 +36,27 @@ def parse_json_file(input_file):
                 
     return valid_json_lines
 
+def export_second_attempts(parsed_data, output_file):
+    with open(output_file, 'w', encoding='utf-8') as f:
+        for obj in parsed_data:
+            if 'second_attempt' in obj:
+                f.write(obj['second_attempt'])
+                f.write('\n\n---\n\n')  # Separator between entries
+
 def main():
-    input_file = "outputs-leap/reward_traces_leap.jsonl"  # Adjust path as needed
-    parsed_data = parse_json_file(input_file)
+    input_file = "outputs-leap/reward_traces_leap.jsonl"
+    output_file = "second_attempts.txt"
     
-    # Print some stats about the parsed data
+    parsed_data = parse_json_file(input_file)
+    export_second_attempts(parsed_data, output_file)
+    
+    # Print summary
     print(f"\nParsing Summary:")
     print(f"Successfully parsed {len(parsed_data)} valid JSON objects")
     if parsed_data:
         print("Fields in first object:", list(parsed_data[0].keys()))
         print("Sample IDs found:", sorted(set(obj['sample_id'] for obj in parsed_data)))
+        print(f"\nSecond attempts exported to {output_file}")
 
 if __name__ == "__main__":
     main()

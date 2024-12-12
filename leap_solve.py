@@ -62,9 +62,9 @@ class Config:
     device: torch.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     seed: int = 42
     task: str = 'CODE'
-    model_variant: str = 'qwen2.5-coder:1.5b'
+    model_variant: str = 'qwen2.5-coder:0.5b'
     data_path: str = './data'
-    output_dir: str = './outputs'
+    output_dir: str = './outputs-leap'
     num_workers: int = 1
     compute_cyclomatic_complexity: bool = False
     logging_steps: int = 10  # Added this line - log every 10 steps
@@ -874,9 +874,9 @@ def main():
     """Main function to parse arguments and run evaluation."""
     parser = argparse.ArgumentParser(description="Code Evaluation System")
     parser.add_argument('--task', type=str, default='CODE', choices=['MATH', 'CODE'], help="Task type: MATH or CODE")
-    parser.add_argument('--model_variant', type=str, default='qwen2.5-coder:1.5b', help="Model variant to use")
+    parser.add_argument('--model_variant', type=str, default='qwen2.5-coder:0.5b', help="Model variant to use")
     parser.add_argument('--data_path', type=str, default='./data', help="Path to the data directory")
-    parser.add_argument('--output_dir', type=str, default='./outputs', help="Directory to save outputs")
+    parser.add_argument('--output_dir', type=str, default='./outputs-leap', help="Directory to save outputs")
     parser.add_argument('--no_cyclomatic', action='store_false', dest='compute_cyclomatic_complexity', help="Disable cyclomatic complexity computation")
     parser.add_argument('--checkpoint', type=str, default=None, help="Path to the checkpoint file")
     args = parser.parse_args()

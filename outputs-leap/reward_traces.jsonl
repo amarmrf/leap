@@ -1,0 +1,90 @@
+{
+  "sample_id": 1,
+  "task_id": 12,
+  "problem": "",
+  "first_attempt": "```python\ndef sort_matrix(matrix):\n    # Sort the matrix based on the sum of each row\n    sorted_matrix = sorted(matrix, key=sum)\n    return sorted_matrix\n```",
+  "second_attempt": "```python\ndef sort_matrix(matrix):\n    # Sort the matrix based on the sum of each row\n    sorted_matrix = sorted(matrix, key=sum)\n    return sorted_matrix\n```\nThis function sorts a given matrix in ascending order according to the sum of its rows. The `sorted()` function is used with a custom key that calculates the sum of each row using the `sum()` function.",
+  "test_cases": "assert sort_matrix([[1, 2, 3], [2, 4, 5], [1, 1, 1]])==[[1, 1, 1], [1, 2, 3], [2, 4, 5]]\nassert sort_matrix([[1, 2, 3], [-2, 4, -5], [1, -1, 1]])==[[-2, 4, -5], [1, -1, 1], [1, 2, 3]]\nassert sort_matrix([[5,8,9],[6,4,3],[2,1,4]])==[[2, 1, 4], [6, 4, 3], [5, 8, 9]]",
+  "metrics": {
+    "edit_distance": 0.61003861003861,
+    "cyclomatic_first": 0.0,
+    "cyclomatic_second": 0.0
+  },
+  "execution_status": {
+    "first_attempt": true,
+    "second_attempt": true
+  }
+}
+
+{
+  "sample_id": 2,
+  "task_id": 14,
+  "problem": "",
+  "first_attempt": "```python\ndef calculate_volume(length, width, height):\n    # Calculate the volume using the formula V = l * w * h\n    volume = length * width * height\n    return volume\n```",
+  "second_attempt": "```python\ndef calculate_volume(length, width, height):\n    # Calculate the volume using the formula V = l * w * h\n    volume = length * width * height\n    return volume\n```",
+  "test_cases": "assert find_Volume(10,8,6) == 240\nassert find_Volume(3,2,2) == 6\nassert find_Volume(1,2,1) == 1",
+  "metrics": {
+    "edit_distance": 1.0,
+    "cyclomatic_first": 0.0,
+    "cyclomatic_second": 0.0
+  },
+  "execution_status": {
+    "first_attempt": false,
+    "second_attempt": false
+  }
+}
+
+{
+  "sample_id": 3,
+  "task_id": 17,
+  "problem": "",
+  "first_attempt": "```python\ndef square_perimeter(side_length):\n    # Calculate the perimeter by multiplying the side length by 4\n    perimeter = 4 * side_length\n    return perimeter\n```",
+  "second_attempt": "```python\ndef square_perimeter(side_length):\n    # Calculate the perimeter by multiplying the side length by 4\n    perimeter = 4 * side_length\n    return perimeter\n```",
+  "test_cases": "assert square_perimeter(10)==40\nassert square_perimeter(5)==20\nassert square_perimeter(4)==16",
+  "metrics": {
+    "edit_distance": 1.0,
+    "cyclomatic_first": 0.0,
+    "cyclomatic_second": 0.0
+  },
+  "execution_status": {
+    "first_attempt": true,
+    "second_attempt": true
+  }
+}
+
+{
+  "sample_id": 4,
+  "task_id": 18,
+  "problem": "",
+  "first_attempt": "```python\ndef remove_chars(str1, str2):\n    for i in range(len(str1)): \n        if (str1[i] in str2): \n            del str1[i]\n```\n\nThis code removes all occurrences of characters from `str1` that are present in `str2`.",
+  "second_attempt": "```python\ndef remove_chars(str1, str2):\n    for i in range(len(str1)): \n        if (str1[i] in str2): \n            del str1[i]\n```\n\nThis code removes all occurrences of characters from `str1` that are present in `str2`.",
+  "test_cases": "assert remove_dirty_chars(\"probasscurve\", \"pros\") == 'bacuve'\nassert remove_dirty_chars(\"digitalindia\", \"talent\") == 'digiidi'\nassert remove_dirty_chars(\"exoticmiles\", \"toxic\") == 'emles'",
+  "metrics": {
+    "edit_distance": 1.0,
+    "cyclomatic_first": 0.0,
+    "cyclomatic_second": 0.0
+  },
+  "execution_status": {
+    "first_attempt": false,
+    "second_attempt": false
+  }
+}
+
+{
+  "sample_id": 5,
+  "task_id": 19,
+  "problem": "",
+  "first_attempt": "```python\ndef has_duplicates(arr): \n    seen = set() \n    for num in arr: \n        if num in seen: \n            return True\n        seen.add(num) \n    return False\n```",
+  "second_attempt": "```python\ndef has_duplicates(arr): \n    seen = set() \n    for num in arr: \n        if num in seen: \n            return True\n        seen.add(num) \n    return False\n```",
+  "test_cases": "assert test_duplicate(([1,2,3,4,5]))==False\nassert test_duplicate(([1,2,3,4, 4]))==True\nassert test_duplicate([1,1,2,2,3,3,4,4,5])==True",
+  "metrics": {
+    "edit_distance": 1.0,
+    "cyclomatic_first": 0.0,
+    "cyclomatic_second": 0.0
+  },
+  "execution_status": {
+    "first_attempt": true,
+    "second_attempt": true
+  }
+}
+
