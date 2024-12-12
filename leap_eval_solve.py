@@ -45,10 +45,10 @@ def set_seed(seed: int) -> None:
         torch.manual_seed(seed)
         np.random.seed(seed)
         random.seed(seed)
-        # if torch.cuda.is_available():
-        #     torch.cuda.manual_seed_all(seed)
-        if torch.backends.mps.is_available():
-            torch.mps.manual_seed(seed)
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed_all(seed)
+        # if torch.backends.mps.is_available():
+        #     torch.mps.manual_seed(seed)
         logger.info(f"Seed set to {seed}.")
     except Exception as e:
         logger.error(f"Error setting seed: {e}")
@@ -59,12 +59,12 @@ def set_seed(seed: int) -> None:
 class Config:
     """Configuration dataclass for evaluation parameters."""
     batch_size: int = 1
-    max_seq_len: int = 4096
-    max_new_tokens: int = 4096
+    max_seq_len: int = 8192
+    max_new_tokens: int = 8192
     device: torch.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     seed: int = 42
     task: str = 'CODE'
-    model_variant: str = 'qwen2.5-coder:1.5b'
+    model_variant: str = 'qwen2.5-coder:0.5b'
     data_path: str = './data'
     output_dir: str = './outputs-leap'
     num_workers: int = 1
@@ -175,28 +175,49 @@ def format_guidelines() -> str:
 def format_principles() -> str:
     """Format the set of principles into a string."""
     principles = [
-        "1. Descriptive and clear naming for functions, variables, and parameters",
-        "2. Self-contained, clear, and maintainable code",
-        "3. Comprehensive documentation (docstrings, comments, usage instructions)",
-        "4. Handle empty or invalid inputs",
-        "5. Account for non-existent patterns/characters",
-        "6. Manage edge cases (e.g., negative numbers, malformed input)",
-        "7. Return sensible defaults when conditions aren't met",
-        "8. Optimize for time complexity (typically aiming for O(n) where possible)",
-        "9. Use efficient data structures and operations",
-        "10. Consider caching or reusing previous states when applicable",
-        "11. Evaluate performance impact on large inputs",
-        "12. Clear return types",
-        "13. Return new modified values instead of mutating originals",
-        "14. Preserve original data when appropriate",
-        "15. Cover diverse test scenarios",
-        "16. Include edge cases in test suite",
-        "17. Verify logical correctness",
-        "18. Ensure consistent behavior across different inputs",
-        "19. Use appropriate control structures (e.g., break statements in loops)",
-        "20. Handle string operations carefully (slicing, regex)",
-        "21. Include necessary imports",
-        "22. Optimize patterns and algorithms for specific use cases"
+        "1. Always validate input to avoid errors such as index out of range or invalid characters",
+        "2. Break down code into smaller, reusable functions for better readability and maintainability",
+        "3. Use meaningful variable names to improve code readability",
+        "4. Consider optimizing for performance, especially with large inputs",
+        "5. Follow PEP 8 standards and best practices",
+        "6. Use type hints to make functions more readable and maintainable",
+        "7. Implement error handling to manage unexpected inputs or conditions gracefully",
+        "8. Add error handling for edge cases like empty strings or single characters",
+        "9. Provide meaningful error messages",
+        "10. Handle division by zero and other mathematical edge cases",
+        "11. Check for invalid inputs before processing",
+        "12. Write comprehensive test cases to ensure behavior across various scenarios",
+        "13. Test thoroughly with different inputs to ensure expected behavior",
+        "14. Consider edge cases in testing (empty inputs, single items, non-standard inputs)",
+        "15. Test the function with a variety of inputs before implementation",
+        "16. Ensure regular expressions match desired patterns correctly",
+        "17. Consider word boundaries when checking for sequences",
+        "18. Use lookahead and lookbehind assertions appropriately",
+        "19. Don't use overly complex patterns unless necessary",
+        "20. Handle cases where characters/patterns don't exist in the string",
+        "21. Consider case sensitivity requirements",
+        "22. Account for leading/trailing characters",
+        "23. Handle nested sequences appropriately",
+        "24. Write clear docstrings for functions describing purpose and expected inputs/outputs",
+        "25. Include examples in documentation",
+        "26. Add comments explaining complex logic",
+        "27. Document edge cases and limitations",
+        "28. Avoid unnecessary operations and loops",
+        "29. Consider efficiency with large inputs",
+        "30. Use appropriate data structures for the task",
+        "31. Minimize string operations when possible",
+        "32. Keep code readable and maintainable",
+        "33. Follow a consistent and robust pattern",
+        "34. Use explicit approaches rather than implicit ones",
+        "35. Consider reusability in design",
+        "36. Make functions focused and single-purpose",
+        "37. Balance between efficiency and readability",
+        "38. Handle empty inputs",
+        "39. Consider boundary conditions",
+        "40. Account for invalid inputs",
+        "41. Handle special characters and non-standard inputs",
+        "42. Consider minimum and maximum values",
+        "43. Handle negative numbers appropriately"
     ]
     return "\n".join(principles)
 
@@ -207,8 +228,8 @@ def get_code_first_turn_prompt(problem: str) -> str:
             "role": "system",
             "content": f"""You are an expert Python programmer. Please understand the requirement and think step by step.
 
-Here are the guidelines to follow in your responses:
-{format_guidelines()}
+Here are the principles to follow in your responses:
+{format_principles()}
 
 Here are some examples of problems and their test cases:
 {format_examples()}"""
@@ -343,7 +364,7 @@ class AdvancedModel(nn.Module):
             # Add default generation parameters
             self.default_params = {
                 "temperature": 0.0,
-                "max_tokens": 4096,
+                "max_tokens": 8192,
                 "top_p": 0.95,
             }
             
@@ -853,7 +874,7 @@ def main():
     """Main function to parse arguments and run evaluation."""
     parser = argparse.ArgumentParser(description="Code Evaluation System")
     parser.add_argument('--task', type=str, default='CODE', choices=['MATH', 'CODE'], help="Task type: MATH or CODE")
-    parser.add_argument('--model_variant', type=str, default='qwen2.5-coder:1.5b', help="Model variant to use")
+    parser.add_argument('--model_variant', type=str, default='qwen2.5-coder:0.5b', help="Model variant to use")
     parser.add_argument('--data_path', type=str, default='./data', help="Path to the data directory")
     parser.add_argument('--output_dir', type=str, default='./outputs-leap', help="Directory to save outputs")
     parser.add_argument('--no_cyclomatic', action='store_false', dest='compute_cyclomatic_complexity', help="Disable cyclomatic complexity computation")
