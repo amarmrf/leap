@@ -161,14 +161,14 @@ def format_examples() -> str:
 def format_guidelines() -> str:
     """Format the set of guidelines into a string."""
     guidelines = [
-        "1. Ensure clarity and precision: Responses should be clear and concise, avoiding any ambiguity or unnecessary complexity",
-        "2. Maintain relevance: Focus directly on solving the core task requirements while avoiding any unrelated or tangential information",
-        "3. Prioritize uniqueness: Each solution should provide unique value and insights rather than repeating common patterns",
-        "4. Emphasize logical analysis: Solutions should follow clear logical steps and methodical problem decomposition",
-        "5. Validate underlying assumptions: Carefully check any implicit assumptions made during problem-solving against the explicit requirements",
-        "6. Apply consistent methodology: Use a systematic approach for handling similar classes of problems",
-        "7. Foster improvement: Continuously analyze past solutions to identify areas for enhanced accuracy and efficiency",
-        "8. Preserve critical details: While maintaining conciseness, ensure no important problem-specific information is lost"
+        "1. Robust Error Handling: Implement comprehensive error handling for all edge cases, invalid inputs, and boundary conditions, providing meaningful error messages to guide users.",
+        "2. Code Quality and Maintainability: Write clean, well-structured code following best practices and style guidelines, with meaningful variable names, clear documentation, and focused, single-purpose functions.",
+        "3. Performance Optimization: Balance efficiency with readability, using appropriate data structures and algorithms while avoiding unnecessary operations, especially for large inputs.",
+        "4. Comprehensive Testing: Create thorough test cases covering various scenarios, including edge cases, boundary conditions, and non-standard inputs to ensure reliable behavior.",
+        "5. Input Validation: Validate all inputs before processing, handling empty inputs, special characters, numerical boundaries, and other potential problematic cases.",
+        "6. Clear Documentation: Provide detailed documentation including docstrings, examples, limitations, and explanations of complex logic to aid understanding and maintenance.",
+        "7. Pattern Recognition: Use appropriate pattern matching techniques, considering case sensitivity, word boundaries, and nested sequences while avoiding overly complex implementations.",
+        "8. Modular Design: Break down code into reusable, well-encapsulated components that balance functionality, efficiency, and maintainability while following consistent patterns."
     ]
     return "\n".join(guidelines)
 
