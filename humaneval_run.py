@@ -87,60 +87,59 @@ class Config:
                 logger.error(f"Failed to create output directory: {e}")
                 raise
 
+
 CODING_EXAMPLES = [
     {
-        "problem": "Write a python function to remove first and last occurrence of a given character from the string.",
+        "problem": "Check if in given list of numbers, are any two numbers closer to each other than given threshold.",
         "tests": [
-            "assert remove_Occ(\"hello\",\"l\") == \"heo\"",
-            "assert remove_Occ(\"abcda\",\"a\") == \"bcd\"",
-            "assert remove_Occ(\"PHP\",\"P\") == \"H\""
+            "assert has_close_elements([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3) == True",
+            "assert has_close_elements([1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05) == False",
+            "assert has_close_elements([1.0, 2.0, 5.9, 4.0, 5.0], 0.95) == True"
         ],
-        "solution": """def remove_Occ(s,ch): 
-    for i in range(len(s)): 
-        if (s[i] == ch): 
-            s = s[0 : i] + s[i + 1:] 
-            break
-    for i in range(len(s) - 1,-1,-1):  
-        if (s[i] == ch): 
-            s = s[0 : i] + s[i + 1:] 
-            break
-    return s"""
-    },
-    {
-        "problem": "Write a function to that returns true if the input string contains sequences of lowercase letters joined with an underscore and false otherwise.",
-        "tests": [
-            "assert text_lowercase_underscore(\"aab_cbbbc\")==(True)",
-            "assert text_lowercase_underscore(\"aab_Abbbc\")==(False)",
-            "assert text_lowercase_underscore(\"Aaab_abbbc\")==(False)"
-        ],
-        "solution": """import re
-def text_lowercase_underscore(text):
-        patterns = '^[a-z]+_[a-z]+$'
-        if re.search(patterns,  text):
-                return True
-        else:
-                return False"""
-    },
-    {
-        "problem": "Write a function to check if the given number is woodball or not.",
-        "tests": [
-            "assert is_woodall(383) == True",
-            "assert is_woodall(254) == False",
-            "assert is_woodall(200) == False"
-        ],
-        "solution": """def is_woodall(x): 
-    if (x % 2 == 0): 
-        return False
-    if (x == 1): 
-        return True
-    x = x + 1 
-    p = 0
-    while (x % 2 == 0): 
-        x = x/2
-        p = p + 1
-        if (p == x): 
-            return True
+        "solution": """def has_close_elements(numbers: List[float], threshold: float) -> bool:
+    for idx, elem in enumerate(numbers):
+        for idx2, elem2 in enumerate(numbers):
+            if idx != idx2:
+                distance = abs(elem - elem2)
+                if distance < threshold:
+                    return True
     return False"""
+    },
+    {
+        "problem": "Separate nested parentheses groups into separate strings and return the list of those. Groups are balanced and not nested within each other.",
+        "tests": [
+            "assert separate_paren_groups('(()()) ((())) () ((())()())') == ['(()())', '((()))', '()', '((())()())']",
+            "assert separate_paren_groups('() (()) ((())) (((())))') == ['()', '(())', '((()))', '(((())))']",
+            "assert separate_paren_groups('(()(())((())))') == ['(()(())((())))]'"
+        ],
+        "solution": """def separate_paren_groups(paren_string: str) -> List[str]:
+    result = []
+    current_string = []
+    current_depth = 0
+
+    for c in paren_string:
+        if c == '(':
+            current_depth += 1
+            current_string.append(c)
+        elif c == ')':
+            current_depth -= 1
+            current_string.append(c)
+
+            if current_depth == 0:
+                result.append(''.join(current_string))
+                current_string.clear()
+
+    return result"""
+    },
+    {
+        "problem": "Given a positive floating point number, return its decimal part (leftover part always smaller than 1).",
+        "tests": [
+            "assert truncate_number(3.5) == 0.5",
+            "assert abs(truncate_number(1.33) - 0.33) < 1e-6",
+            "assert abs(truncate_number(123.456) - 0.456) < 1e-6"
+        ],
+        "solution": """def truncate_number(number: float) -> float:
+    return number % 1.0"""
     }
 ]
 
@@ -165,12 +164,6 @@ def get_code_first_turn_prompt(problem: str) -> str:
         {
             "role": "system",
             "content": f"""You are an expert Python programmer. Please understand the requirement and think step by step. Here are some examples of problems and their test cases:\n{format_examples()}"""
-            # Consider these aspects when solving the problem:
-            # 1. Input format and constraints
-            # 2. Required output format
-            # 3. Edge cases to handle
-            # 4. Performance considerations
-            # """
         },
         {
             "role": "user",
@@ -390,7 +383,7 @@ class Evaluate:
         self.reward_history: List[float] = []
         self.edit_distance_ratios: List[float] = []
     
-        self.checkpoint_file = os.path.join(self.config.output_dir, 'checkpoint.json')
+        self.checkpoint_file = os.path.join(self.config.output_dir, 'checkpoint-humaneval.json')
         self.last_completed_sample = self._load_checkpoint()
 
     def _load_checkpoint(self) -> int:
@@ -419,7 +412,7 @@ class Evaluate:
         Save trace information to a JSON file with pretty printing.
         """
         try:
-            trace_file = os.path.join(self.config.output_dir, 'reward_traces.jsonl')
+            trace_file = os.path.join(self.config.output_dir, 'reward_traces_humaneval.jsonl')
             with open(trace_file, 'a') as f:
                 # Pretty print the JSON with indentation
                 json_str = json.dumps(trace_info, indent=2)
@@ -427,41 +420,6 @@ class Evaluate:
                 f.write(json_str + '\n\n')
         except Exception as e:
             logger.error(f"Error saving trace information: {e}")
-
-    def safe_execute_code(self, code: str, test: str, timeout: int = 5) -> bool:
-        """
-        Safely execute generated code with a test case.
-
-        Args:
-            code (str): Generated code.
-            test (str): Test case code.
-            timeout (int): Timeout in seconds.
-
-        Returns:
-            bool: Execution success status.
-        """
-        def target(exec_globals: Dict[str, Any]) -> None:
-            try:
-                exec(code, exec_globals)
-                exec(test, exec_globals)
-                exec_globals['exec_success'] = True
-            except Exception as e:
-                logger.warning(f"Execution error: {e}")
-                exec_globals['exec_success'] = False
-
-        exec_globals: Dict[str, Any] = {}
-        thread = threading.Thread(target=target, args=(exec_globals,), daemon=True)
-        try:
-            thread.start()
-            thread.join(timeout)
-            success = exec_globals.get('exec_success', False)
-            if not success and thread.is_alive():
-                logger.warning("Code execution timed out.")
-                return False
-            return success
-        except Exception as e:
-            logger.error(f"Error during code execution thread: {e}")
-            return False
 
     def compute_cyclomatic_complexity(self, code: str) -> float:
         """
@@ -558,14 +516,6 @@ class Evaluate:
     ) -> Tuple[List[str], List[str], Optional[List[str]]]:
         """
         Prepare a batch of data for processing.
-        
-        Args:
-            batch: List of data items containing problems/prompts
-            turn: Turn number (1 or 2)
-            prev_attempts: Previous attempts for turn 2
-            
-        Returns:
-            Tuple containing (inputs, correct answers, test cases)
         """
         try:
             if isinstance(batch, dict):
@@ -575,7 +525,8 @@ class Evaluate:
                 # Extract problem text and handle array wrapping
                 problems = []
                 for item in batch:
-                    text = item.get('text', item.get('prompt', ''))
+                    # Use prompt directly for HumanEval format
+                    text = item.get('prompt', '')
                     if isinstance(text, list):
                         text = text[0] if text else ''
                     problems.append(text)
@@ -583,20 +534,26 @@ class Evaluate:
                 # Handle array-wrapped correct answers
                 correct = []
                 for item in batch:
-                    solution = item.get('code', item.get('canonical_solution', ''))
+                    # Use canonical_solution for HumanEval format
+                    solution = item.get('canonical_solution', '')
                     if isinstance(solution, list):
                         solution = solution[0] if solution else ''
                     correct.append(solution)
                 
-                # Convert test lists to strings and handle tuples
+                # Convert test code to executable format
                 test_lists = []
                 for item in batch:
-                    test_list = item.get('test_list', [])
-                    if isinstance(test_list, tuple):
-                        test_list = [str(test) for test in test_list]
-                    elif isinstance(test_list, list):
-                        test_list = [str(test[0]) if isinstance(test, tuple) else str(test) for test in test_list]
-                    test_lists.append(test_list)
+                    # For HumanEval, we need to construct test cases from the test field
+                    test_code = item.get('test', '')
+                    if test_code:
+                        # Extract the assertions from the test code
+                        test_lines = []
+                        for line in test_code.splitlines():
+                            if line.strip().startswith('assert'):
+                                test_lines.append(line.strip())
+                        test_lists.append(test_lines)
+                    else:
+                        test_lists.append([])
                 
                 if turn == 1:
                     inputs = [
@@ -666,6 +623,7 @@ class Evaluate:
             for i in tqdm(range(start_index, dataset_size), desc="Evaluation"):
                 batch = self.val_loader.dataset[i]
                 logger.info(f"\n--- Processing Sample {i+1} ---")
+                
                 # Prepare single sample as a list
                 inputs, correct, tests = self.prepare_batch([batch], turn=1)
                 
@@ -673,48 +631,42 @@ class Evaluate:
                 first = [self.model.generate_text(inputs[0])[0]]
                 
                 # Skip second attempt and mark it as false
-                second = [""]  # Empty string for second attempt
+                second = [""]
                 
                 trace_info = {
                     "sample_id": total_samples + 1,
                     "task_id": batch.get('task_id', None),
-                    "problem": batch.get('problem', ''),
+                    "problem": batch.get('prompt', ''),  # Changed from 'problem' to 'prompt'
                     "first_attempt": first[0],
                     "second_attempt": second[0],
                     "test_cases": tests[0] if tests else "",
                     "metrics": {},
                     "execution_status": {
                         "first_attempt": False,
-                        "second_attempt": False  # Always false since we're skipping it
+                        "second_attempt": False
                     }
                 }
 
-                logger.info("\nTest Cases:")
-                logger.info(tests[0] if tests else "No test cases")
-
                 # Process first attempt
                 logger.info("\n=== First Attempt ===")
-                test_cases = tests[0].split('\n') if tests else []
                 first_code = self._clean_code_response(first[0])
                 
-                actual_func_name = self.extract_function_name(first_code)
-                test_case = test_cases[0]
-                expected_func_name = test_case.split('(')[0].replace('assert ', '')
-                
-                if actual_func_name and actual_func_name != expected_func_name:
-                    test_cases = self.normalize_test_cases(test_cases, actual_func_name, expected_func_name)
-                    logger.info(f"Function name mismatch. Expected: {expected_func_name}, Got: {actual_func_name}")
-            
-                all_tests_passed = True
+                # For HumanEval, we need to execute both the prompt and the solution
                 exec_globals = {}
-
+                all_tests_passed = True
+                
                 try:
-                    # First execute the solution code
+                    # First execute the prompt (contains function signature and docstring)
+                    exec(batch['prompt'], exec_globals)
+                    
+                    # Then execute the generated solution
                     exec(first_code, exec_globals)
                     logger.info("✓ Code execution successful")
 
+                    # Execute test cases
+                    test_cases = tests[0].split('\n') if tests else []
                     passed_tests = 0
-                    # Then try all test cases
+                    
                     for j, test in enumerate(test_cases, 1):
                         if test.strip():
                             try:
@@ -731,8 +683,8 @@ class Evaluate:
                     trace_info["execution_status"]["first_attempt"] = all_tests_passed
                     total_correct_t1 += 1 if all_tests_passed else 0
                     
-                except Exception:
-                    logger.info("× Code execution 1 failed")
+                except Exception as e:
+                    logger.info(f"× Code execution failed: {str(e)}")
                     trace_info["execution_status"]["first_attempt"] = False
 
                 # Add metrics
@@ -831,7 +783,7 @@ def main():
         config.validate()
         set_seed(config.seed)
 
-        val_file = os.path.join(config.data_path, 'sanitized_test_257.json')
+        val_file = os.path.join(config.data_path, 'HumanEval.json')
         val_data = load_json(val_file)
         val_dataset = BaseDataset(val_data, task=config.task)
         val_loader = DataLoader(
