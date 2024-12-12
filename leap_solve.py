@@ -159,25 +159,38 @@ def format_examples() -> str:
     return examples_str
 
 
+def format_principles() -> str:
+    """Format the set of principles into a string."""
+    principles = [
+        "1. Clarity and Precision: Provide clear, concise code without ambiguity.",
+        "2. Relevance: Focus only on the specific programming task.",
+        "3. Non-redundancy: Write efficient code without duplicate logic.",
+        "4. Understanding: Include brief comments for complex logic.",
+        "5. Engagement: Structure code to be readable and maintainable.",
+        "6. Logical Reasoning: Demonstrate clear problem-solving steps.",
+        "7. Appropriate Level: Write professional-grade code.",
+        "8. Continuous Improvement: Learn from test cases and improve solutions."
+    ]
+    return "\n".join(principles)
+
 def get_code_first_turn_prompt(problem: str) -> str:
     """Generate the base prompt structure using Ollama's chat format."""
     return [
         {
             "role": "system",
-            "content": f"""You are an expert Python programmer. Please understand the requirement and think step by step. Here are some examples of problems and their test cases:\n{format_examples()}"""
-            # Consider these aspects when solving the problem:
-            # 1. Input format and constraints
-            # 2. Required output format
-            # 3. Edge cases to handle
-            # 4. Performance considerations
-            # """
+            "content": f"""You are an expert Python programmer. Please understand the requirement and think step by step.
+
+Here are the principles to follow in your responses:
+{format_principles()}
+
+Here are some examples of problems and their test cases:
+{format_examples()}"""
         },
         {
             "role": "user",
             "content": f"{problem}"
         }
     ]
-
 def get_code_correction_prompt(problem: str, prev_attempt: str) -> str:
     """Generate the self-correction prompt using proper chat format."""
     return [
