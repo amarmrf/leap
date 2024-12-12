@@ -45,8 +45,10 @@ def set_seed(seed: int) -> None:
         torch.manual_seed(seed)
         np.random.seed(seed)
         random.seed(seed)
-        if torch.cuda.is_available():
-            torch.cuda.manual_seed_all(seed)
+        # if torch.cuda.is_available():
+        #     torch.cuda.manual_seed_all(seed)
+        if torch.backends.mps.is_available():
+            torch.mps.manual_seed(seed)
         logger.info(f"Seed set to {seed}.")
     except Exception as e:
         logger.error(f"Error setting seed: {e}")
@@ -663,7 +665,7 @@ class Evaluate:
         self.model.eval()
         total_correct_t1, total_correct_t2, total_samples = 0.0, 0.0, 0
         delta_i_to_c, delta_c_to_i = 0, 0
-        NUM_ITERATIONS = 7
+        NUM_ITERATIONS = 5
 
         validation_metrics = {
             "first_attempt": {
